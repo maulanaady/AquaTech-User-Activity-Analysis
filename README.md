@@ -100,7 +100,7 @@ The interesting thing here is that records with past event times may appear in t
 
 ### DBT
 +	Update sources.database in the **./airflow/data/dbt/user_activity/models/staging/schema.yml** file according to your project Id.
-+	We will use the *materialize = incremental* configuration for the DAU and MAU tables to handle "late arriving data".
++	We will use the *materialize = incremental* configuration for the dau and mau tables to handle "late arriving data".
 
 ### Airflow
 + Preparation

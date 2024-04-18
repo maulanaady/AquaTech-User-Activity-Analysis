@@ -19,7 +19,7 @@ from cosmos.constants import TestBehavior   # , InvocationMode
 DEFAULT_DBT_ROOT_PATH = "/opt/airflow/data/dbt"
 DBT_ROOT_PATH = Path(os.getenv("DBT_ROOT_PATH", DEFAULT_DBT_ROOT_PATH))
 
-transform_dataset = Dataset("bigquery/zoomcamp-ady.event_zoomcamp_dataset.event_data")
+transform_dataset = Dataset("bigquery/event_data")
 
 profile_config = ProfileConfig(
     profile_name="user_activity",

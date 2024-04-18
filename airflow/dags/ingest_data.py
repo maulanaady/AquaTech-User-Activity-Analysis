@@ -17,7 +17,7 @@ from airflow.models.baseoperator import chain
 # gcs_file_path = "output.csv"
 bucket_name = "event_zoomcamp_bucket"
 
-transform_dataset = Dataset("bigquery/zoomcamp-ady.event_zoomcamp_dataset.event_data")
+transform_dataset = Dataset("bigquery/event_data")
 
 
 def _validateJSON(jsonData):

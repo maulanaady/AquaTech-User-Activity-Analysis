@@ -110,14 +110,15 @@ The interesting thing here is that records with past event times may appear in t
   - DBT commands will be executed via Airflow, so we need to install dbt-bigquery and astronomer-cosmos in the airflow worker and scheduler containers:
     ```
     docker exec airflow-airflow-worker-1 bash -c "pip install astronomer-cosmos dbt-bigquery"  &&
-    docker exec airflow-airflow-scheduler-1 bash -c "pip install astronomer-cosmos dbt-bigquery" && docker restart airflow-airflow-worker-1
+    docker exec airflow-airflow-scheduler-1 bash -c "pip install astronomer-cosmos dbt-bigquery" && 
+    docker restart airflow-airflow-worker-1
     ```
   - Log in to the Airflow web server UI (http://localhost:8080) with the username airflow and password airflow. Hover over the admin tab and click connections.
   - Create a new connection with **Connection Type = Google Cloud** and **Connection Id = *‘google_client’***. Fill in the Project Id according to your project Id, and fill in the **Keyfile Path** referring to service-account.json **(/opt/airflow/data/service-account.json)**.
   - Click the test button at the bottom to test the connection to Google Cloud with the predefined configuration. A successful connection test will display *"Connection successfully tested"* at the top of the web page (scroll up), and then save the connection.
 
 + DAGs
-In this project, we run two DAGs: get_data and event_data_transformations.
+  In this project, we run two DAGs: get_data and event_data_transformations.
 
   - DAG get_data:
     This DAG runs every hour (schedule = hourly) and retrieves and processes raw data JSON files according to the execution time parameter in Airflow (not all JSON files are processed at once). The output of one run of the DAG is a CSV file uploaded to Cloud Storage with the naming format: *output_{data_interval_start}_{data_interval_end}.csv (e.g., output_20240413030000_20240413040000.csv is the file generated when the DAG runs for the schedule interval from April 13, 2024, at 03:00:00 to April 13, 2024, at 04:00:00)*. Therefore, in one day, 24 files will be generated. 

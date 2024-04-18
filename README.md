@@ -68,17 +68,19 @@ The interesting thing here is that records with past event times may appear in t
 
 ## Output
 ### Tables:
-•	event_data: Contains parsed data from JSON files plus a dl_updated_at column indicating the timestamp when records were processed (processing time).
-•	dau (daily active user): Contains a summary of the number of active users in daily units (based on event time).
-•	mau (monthly active user): Contains a summary of the number of active users in monthly units (based on event time).
-Dashboard (Looker - optional)
-Data Tools Used
-•	Google Cloud Platform (Cloud Storage and BigQuery)
-•	Terraform
-•	Docker
-•	DBT (Data Build Tool)
-•	Airflow
-•	Looker (optional)
++	event_data: Contains parsed data from JSON files plus a dl_updated_at column indicating the timestamp when records were processed (processing time).
++	dau (daily active user): Contains a summary of the number of active users in daily units (based on event time).
++	mau (monthly active user): Contains a summary of the number of active users in monthly units (based on event time).
+
+### Dashboard (Looker - optional)
+
+## Data Tools Used
++	[Google Cloud Platform (Cloud Storage and BigQuery)](https://console.cloud.google.com/)
++	[Terraform](https://developer.hashicorp.com/terraform/docs)
++	[Docker](https://docs.docker.com/)
++	[DBT (Data Build Tool)](https://docs.getdbt.com/)
++	[Airflow](https://airflow.apache.org/docs/)
++	Looker (optional)
 
 Google Cloud Preparation
 •	Create a GCP account.

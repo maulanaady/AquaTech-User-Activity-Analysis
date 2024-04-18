@@ -122,7 +122,7 @@ def event_data_transformations():
         profile_config=profile_config,
         execution_config=execution_config,
         operator_args={
-            # "install_deps": True,  # install any necessary dependencies before running any dbt command
+            "install_deps": True,  # install any necessary dependencies before running any dbt command
             # "full_refresh": True,  # used only in dbt commands that support this flag
             "vars": '{"runtime": {{ data_interval_end }} }',
             "fail_fast": True,

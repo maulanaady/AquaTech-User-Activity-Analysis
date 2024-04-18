@@ -118,6 +118,7 @@ The interesting thing here is that records with past event times may appear in t
   - Click the test button at the bottom to test the connection to Google Cloud with the predefined configuration. A successful connection test will display *"Connection successfully tested"* at the top of the web page (scroll up), and then save the connection.
 
 + DAGs
+
   In this project, we run two DAGs: get_data and event_data_transformations.
 
   - DAG get_data:

@@ -12,7 +12,7 @@ cd AquaTech-User-Activity-Analysis
 ## Project Overview
 In this project, JSON files have been stored in the raw_data.zip file (located on Google Drive) with default folder and file names for the months of April and May 2024. To download the file, execute the bash script 
 ```
-chmod +x download_raw_data.sh
+chmod +x download_raw_data.sh &&
 ./download_raw_data.sh
 ```
 the output will be saved in the **./raw_data.zip** file.
@@ -23,7 +23,7 @@ unzip ./raw_data.zip -d ./airflow/data/
 ```
 However, if the current datetime is outside of April or May 2024, execute the bash script **rename.sh $1 $2 $3**, where parameter 1 represents the current year, parameter 2 represents the current month, and parameter 3 represents the next month, e.g.:
 ```
-chmod +x rename.sh
+chmod +x rename.sh &&
 ./rename.sh 2024 04 05
 ```
 Note that executing the rename.sh script can be time-consuming. 
@@ -87,12 +87,12 @@ The interesting thing here is that records with past event times may appear in t
 ### Google Cloud Preparation
 +	Create a GCP account.
 +	Create a service account with appropriate access.
-+	Download the service account JSON file and save it in the **gcp_platform** folder (rename the file to service-account.json).
++	Download the service account JSON file and save it in the **gcp_terraform** folder (rename the file to service-account.json).
 
 ### Terraform (for activating Cloud Storage and BigQuery services)
 +	Install Terraform on your machine/VM.
-+	Change directory to the **gcp_platform** folder.
-+	In the *gcp_platform/variables.tf file*, update the Terraform variables for project, region, and location according to your preferences.
++	Change directory to the **gcp_terraform** folder.
++	In the *gcp_terraform/variables.tf file*, update the Terraform variables for project, region, and location according to your preferences.
 +	Execute `terraform init` and `terraform apply` to create the Cloud Storage bucket and BigQuery dataset.
 +	Open google cloud consoles, and navigate to bigquery. Execute the query for the SQL commands in the *./ddl_table.sql* file.
 

@@ -133,5 +133,5 @@ The interesting thing here is that records with past event times may appear in t
     Unpause the *event_data_transformations* DAG. This DAG runs using the data aware scheduling (dataset schedule) triggered by the *get_data* DAG. When running, this DAG will execute a BigQuery query to create an external table from the CSV file in Cloud Storage for a one-day range and then insert it into the event_data table. Next, Airflow will execute the DBT command to transform event_data table to upsert the DAU and MAU tables.
 
 ### Looker (optional)
-Create visualizations according to your preferences. Here we create visualizations using Looker with the DAU and MAU datasources. Below is example of dashboard created using looker studio
+Create dashboard using your prefered tools. Here we create visualizations using Looker with the event_data, dau, and mau tables. Below is example of dashboard created using looker studio
 ![Example Image](https://github.com/maulanaady/AquaTech-User-Activity-Analysis/blob/main/images/dashboard.png)

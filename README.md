@@ -28,8 +28,8 @@ Note that executing the rename.sh script can be time-consuming.
 
 The output of the rename.sh execution will be saved in the **./airflow/data/raw_data** folder with folder and file structures corresponding to the current datetime. 
 Execute 
-
-```tree ./airflow/data/raw_data
+```
+tree ./airflow/data/raw_data
 ``` 
 command to view the folder structure.
 Example File Structure:

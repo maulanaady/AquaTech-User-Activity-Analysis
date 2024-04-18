@@ -106,10 +106,10 @@ The interesting thing here is that records with past event times may appear in t
   - Copy the service-account.json file to the **./airflow/data** folder (to be used in creating a Google Cloud connection in Airflow).
   - Navigate to the **./airflow directory** and execute 
     ```
-    chmod ugo+w data
-    mkdir -p logs
-    mkdir -p config
-    mkdir -p plugins
+    chmod ugo+w data &&
+    mkdir -p logs &&
+    mkdir -p config &&
+    mkdir -p plugins &&
     docker compose up -d
     ```
   - Ensure all services are up and running (`docker ps`).
@@ -119,7 +119,7 @@ The interesting thing here is that records with past event times may appear in t
     docker exec airflow-airflow-scheduler-1 bash -c "pip install astronomer-cosmos dbt-bigquery" && 
     docker restart airflow-airflow-worker-1
     ```
-  - Log in to the Airflow web server UI (http://localhost:8080) with the username airflow and password: *airflow*. Hover over the admin tab and click connections.
+  - Log in to the Airflow web server UI (http://localhost:8080) with the *username:airflow* and *password: airflow*. Hover over the admin tab and click connections.
   - Create a new connection with **Connection Type = Google Cloud** and **Connection Id = *‘google_client’***. Fill in the Project Id according to your project Id, and fill in the **Keyfile Path** referring to service-account.json **(/opt/airflow/data/service-account.json)**.
   - Click the test button at the bottom to test the connection to Google Cloud with the predefined configuration. A successful connection test will display *"Connection successfully tested"* at the top of the web page (scroll up), and then save the connection.
 

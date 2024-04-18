@@ -43,7 +43,8 @@ Example File Structure:
 ```
 
 ## Problem Statement
-Although the filenames are created in the format of the current datetime (to match the data_interval_start parameter in Airflow), the actual raw data is for event time in 2022 (timestamp = 2022). Below is an example JSON record from the raw data:
+Although the filenames are created in the format of the current datetime (to match the _data_interval_start_ parameter in Airflow), the actual raw data is for event time in 2022 (timestamp = 2022). Below is an example JSON record from the raw data:
+```
 [{
   "distinct_id": "21920",
   "event": "$identify",
@@ -61,8 +62,9 @@ Although the filenames are created in the format of the current datetime (to mat
   "$geoip_subdivision_1_code": "SS",
   "$geoip_subdivision_1_name": "South Sumatra"
 }]
-We assume to process the data for the current datetime (processing datetime = current datetime), but the events themselves occurred in 2022 (event_time = 2022).
-The interesting thing here is that records with past event times may appear in the new JSON files (e.g., a JSON record with "timestamp": "2022-09-22T11:09:43.929Z" appears in the file 20240413-030129.json). This is a kind of "late arriving data". These delayed data will affect the daily active user (DAU) and monthly active user (MAU) tables. Therefore, if there are late-arriving records, the DAU for the related day (event_time) will be recalculated, as will the MAU for the related month.
+```
+We assume to process the data for the current datetime **(processing datetime = current datetime), but the events themselves occurred in 2022 (event_time = 2022).**
+The interesting thing here is that records with past event times may appear in the new JSON files (e.g., a JSON record with "timestamp": "2022-09-22T11:09:43.929Z" appears in the file 20240413-030129.json). This is a kind of **"late arriving data"**. These delayed data will affect the daily active user (DAU) and monthly active user (MAU) tables. Therefore, _if there are late-arriving records, the DAU for the related day (event_time) will be recalculated, as will the MAU for the related month_.
 Output
 Tables:
 •	event_data: Contains parsed data from JSON files plus a dl_updated_at column indicating the timestamp when records were processed (processing time).

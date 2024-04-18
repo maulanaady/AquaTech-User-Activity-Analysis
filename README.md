@@ -82,8 +82,8 @@ The interesting thing here is that records with past event times may appear in t
 +	[Google Cloud Platform (Cloud Storage and BigQuery)](https://console.cloud.google.com/)
 +	[Terraform](https://developer.hashicorp.com/terraform/docs)
 +	[Docker](https://docs.docker.com/)
-+	[DBT (Data Build Tool)](https://docs.getdbt.com/)
 +	[Airflow](https://airflow.apache.org/docs/)
++	[DBT (Data Build Tool)](https://docs.getdbt.com/)
 +	Looker Studio (optional)
 
 ### Google Cloud Preparation

@@ -33,7 +33,8 @@ tree ./airflow/data/raw_data
 ``` 
 command to view the folder structure.
 Example File Structure:
-```./airflow/data/raw_data
+```
+./airflow/data/raw_data
 ├── 2024-04-01
 │  ├── 20240401-000000.json
 │  ├── 20240401-000001.json

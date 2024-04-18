@@ -119,16 +119,16 @@ The interesting thing here is that records with past event times may appear in t
 
 + DAGs
 
-  In this project, we run two DAGs: get_data and event_data_transformations.
+  In this project, we run two DAGs: *get_data* and *event_data_transformations*.
 
-  - DAG get_data:
+  - DAG *get_data*:
     This DAG runs every hour (schedule = hourly) and retrieves and processes raw data JSON files according to the execution time parameter in Airflow (not all JSON files are processed at once). The output of one run of the DAG is a CSV file uploaded to Cloud Storage with the naming format: *output_{data_interval_start}_{data_interval_end}.csv (e.g., output_20240413030000_20240413040000.csv is the file generated when the DAG runs for the schedule interval from April 13, 2024, at 03:00:00 to April 13, 2024, at 04:00:00)*. Therefore, in one day, 24 files will be generated. 
-    When the data_interval_start is at 00:00 early in the morning, this DAG will trigger the event_data_transformations DAG for execution. 
+    When the data_interval_start is at 00:00 early in the morning, this DAG will trigger the *event_data_transformations* DAG for execution. 
 
     Activate the DAG by clicking on the DAG tab on the web and unpausing the get_data DAG, then the job to extract data from the JSON file will run and store the results in Cloud Storage.
 
-  - DAG event_data_transformations:
-    Unpause the event_data_transformations DAG. This DAG runs using the data aware scheduling (dataset schedule) triggered by the get_data DAG. When running, this DAG will execute a BigQuery query to create an external table from the CSV file in Cloud Storage for a one-day range and then insert it into the event_data table. Next, Airflow will execute the DBT command to transform event_data table to upsert the DAU and MAU tables.
+  - DAG *event_data_transformations*:
+    Unpause the *event_data_transformations* DAG. This DAG runs using the data aware scheduling (dataset schedule) triggered by the *get_data* DAG. When running, this DAG will execute a BigQuery query to create an external table from the CSV file in Cloud Storage for a one-day range and then insert it into the event_data table. Next, Airflow will execute the DBT command to transform event_data table to upsert the DAU and MAU tables.
 
 ### Looker (optional)
 Create visualizations according to your preferences. Here we create visualizations using Looker with the DAU and MAU datasources. Below is example of dashboard created using looker studio

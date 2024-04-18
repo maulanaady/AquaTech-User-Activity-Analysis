@@ -92,7 +92,7 @@ The interesting thing here is that records with past event times may appear in t
 +	Change directory to the **gcp_platform** folder.
 +	In the *gcp_platform/variables.tf file*, update the Terraform variables for project, region, and location according to your preferences.
 +	Execute `terraform init` and `terraform apply` to create the Cloud Storage bucket and BigQuery dataset.
-+	Open google cloud consoles, and navigate to bigquery. Execute the query for the SQL commands in the ./ddl_table.sql file.
++	Open google cloud consoles, and navigate to bigquery. Execute the query for the SQL commands in the *./ddl_table.sql* file.
 
 ### DBT
 +	Update sources.database in the **./de-project/airflow/data/dbt/user_activity/models/staging/schema.yml** file according to your project Id.

@@ -14,7 +14,7 @@ In this project, JSON files have been stored in the raw_data.zip file (located o
 ```
 ./download_raw_data.sh
 ```
-the output will be saved in the ./raw_data.zip file.
+the output will be saved in the **./raw_data.zip** file.
 
 If the current datetime falls within April or May 2024, simply unzip the raw_data.zip file and save it to the ./airflow/data/ folder:
 ```
@@ -25,8 +25,10 @@ However, if the current datetime is outside of April or May 2024, execute the ba
 bash ./rename.sh 2024 04 05
 ```
 Note that executing the rename.sh script can be time-consuming. 
+
 The output of the rename.sh execution will be saved in the **./airflow/data/raw_data** folder with folder and file structures corresponding to the current datetime. 
 Execute 
+
 ```tree ./airflow/data/raw_data
 ``` 
 command to view the folder structure.

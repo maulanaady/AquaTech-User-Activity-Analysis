@@ -19,12 +19,14 @@ the output will be saved in the **./raw_data.zip** file.
 
 If the current datetime falls within April or May 2024, simply unzip the raw_data.zip file and save it to the ./airflow/data/ folder:
 ```
-unzip ./raw_data.zip -d ./airflow/data/ 
+unzip ./raw_data.zip -d ./airflow/data/ &&
+rm -f ./raw_data.zip
 ```
 However, if the current datetime is outside of April or May 2024, execute the bash script **rename.sh $1 $2 $3**, where parameter 1 represents the current year, parameter 2 represents the current month, and parameter 3 represents the next month, e.g.:
 ```
 chmod +x rename.sh &&
-./rename.sh 2024 04 05
+./rename.sh 2024 04 05 &&
+rm -f ./raw_data.zip
 ```
 Note that executing the rename.sh script can be time-consuming. 
 

@@ -68,9 +68,9 @@ The interesting thing here is that records with past event times may appear in t
 
 ## Output
 ### Tables:
-+	event_data: Contains parsed data from JSON files plus a dl_updated_at column indicating the timestamp when records were processed (processing time).
-+	dau (daily active user): Contains a summary of the number of active users in daily units (based on event time).
-+	mau (monthly active user): Contains a summary of the number of active users in monthly units (based on event time).
++	*event_data*: Contains parsed data from JSON files plus a *dl_updated_at* column indicating the timestamp when records were processed (_processing time_).
++	*dau* (daily active user): Contains a summary of the number of active users in daily units (based on event time).
++	*mau* (monthly active user): Contains a summary of the number of active users in monthly units (based on event time).
 
 ### Dashboard (Looker - optional)
 
@@ -85,18 +85,18 @@ The interesting thing here is that records with past event times may appear in t
 ### Google Cloud Preparation
 +	Create a GCP account.
 +	Create a service account with appropriate access.
-+	Download the service account JSON file and save it in the gcp_platform folder (rename the file to service-account.json).
++	Download the service account JSON file and save it in the **gcp_platform** folder (rename the file to service-account.json).
 
 ### Terraform (for activating Cloud Storage and BigQuery services)
 +	Install Terraform on your machine/VM.
-+	Change directory to the gcp_platform folder.
-+	In the gcp_platform/variables.tf file, update the Terraform variables for project, region, and location according to your preferences.
-+	Execute terraform init and terraform apply to create the Cloud Storage bucket and BigQuery dataset.
++	Change directory to the **gcp_platform** folder.
++	In the *gcp_platform/variables.tf file*, update the Terraform variables for project, region, and location according to your preferences.
++	Execute `terraform init` and `terraform apply` to create the Cloud Storage bucket and BigQuery dataset.
 +	Open google cloud consoles, and navigate to bigquery. Execute the query for the SQL commands in the ./ddl_table.sql file.
 
 ### DBT
-+	Update sources.database in the ./de-project/airflow/data/dbt/user_activity/models/staging/schema.yml file according to your project Id.
-+	We will use the materialize = incremental configuration for the DAU and MAU tables to handle "late arriving data".
++	Update sources.database in the **./de-project/airflow/data/dbt/user_activity/models/staging/schema.yml** file according to your project Id.
++	We will use the *materialize = incremental* configuration for the DAU and MAU tables to handle "late arriving data".
 
 ### Airflow
 + Preparation
@@ -113,14 +113,14 @@ The interesting thing here is that records with past event times may appear in t
     docker exec airflow-airflow-scheduler-1 bash -c "pip install astronomer-cosmos dbt-bigquery" && docker restart airflow-airflow-worker-1
     ```
   - Log in to the Airflow web server UI (http://localhost:8080) with the username airflow and password airflow. Hover over the admin tab and click connections.
-  - Create a new connection with Connection Type = **Google Cloud** and Connection Id = _‘google_client’_. Fill in the Project Id according to your project Id, and fill in the Keyfile Path referring to service-account.json **(/opt/airflow/data/service-account.json)**.
-  - Click the test button at the bottom to test the connection to Google Cloud with the predefined configuration. A successful connection test will display "Connection successfully tested" at the top of the web page (scroll up), and then save the connection.
+  - Create a new connection with **Connection Type = Google Cloud** and **Connection Id = *‘google_client’***. Fill in the Project Id according to your project Id, and fill in the **Keyfile Path** referring to service-account.json **(/opt/airflow/data/service-account.json)**.
+  - Click the test button at the bottom to test the connection to Google Cloud with the predefined configuration. A successful connection test will display *"Connection successfully tested"* at the top of the web page (scroll up), and then save the connection.
 
 + DAGs
 In this project, we run two DAGs: get_data and event_data_transformations.
 
   - DAG get_data:
-    This DAG runs every hour (schedule = hourly) and retrieves and processes raw data JSON files according to the execution time parameter in Airflow (not all JSON files are processed at once). The output of one run of the DAG is a CSV file uploaded to Cloud Storage with the naming format: _output_{data_interval_start}_{data_interval_end}.csv_ (e.g., output_20240413030000_20240413040000.csv is the file generated when the DAG runs for the schedule interval from April 13, 2024, at 03:00:00 to April 13, 2024, at 04:00:00). Therefore, in one day, 24 files will be generated. 
+    This DAG runs every hour (schedule = hourly) and retrieves and processes raw data JSON files according to the execution time parameter in Airflow (not all JSON files are processed at once). The output of one run of the DAG is a CSV file uploaded to Cloud Storage with the naming format: *output_{data_interval_start}_{data_interval_end}.csv (e.g., output_20240413030000_20240413040000.csv is the file generated when the DAG runs for the schedule interval from April 13, 2024, at 03:00:00 to April 13, 2024, at 04:00:00)*. Therefore, in one day, 24 files will be generated. 
     When the data_interval_start is at 00:00 early in the morning, this DAG will trigger the event_data_transformations DAG for execution. 
 
     Activate the DAG by clicking on the DAG tab on the web and unpausing the get_data DAG, then the job to extract data from the JSON file will run and store the results in Cloud Storage.

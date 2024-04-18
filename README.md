@@ -82,20 +82,23 @@ The interesting thing here is that records with past event times may appear in t
 +	[Airflow](https://airflow.apache.org/docs/)
 +	Looker (optional)
 
-Google Cloud Preparation
-•	Create a GCP account.
-•	Create a service account with appropriate access.
-•	Download the service account JSON file and save it in the gcp_platform folder (rename the file to service-account.json).
-Terraform (for activating Cloud Storage and BigQuery services)
-•	Install Terraform on your machine/VM.
-•	Change directory to the gcp_platform folder.
-•	In the gcp_platform/variables.tf file, update the Terraform variables for project, region, and location according to your preferences.
-•	Execute terraform init and terraform apply to create the Cloud Storage bucket and BigQuery dataset.
-•	Open google cloud consoles, and navigate to bigquery. Execute the query for the SQL commands in the ./ddl_table.sql file.
-DBT
-•	Update sources.database in the ./de-project/airflow/data/dbt/user_activity/models/staging/schema.yml file according to your project Id.
-•	We will use the materialize = incremental configuration for the DAU and MAU tables to handle "late arriving data".
-Airflow
+### Google Cloud Preparation
++	Create a GCP account.
++	Create a service account with appropriate access.
++	Download the service account JSON file and save it in the gcp_platform folder (rename the file to service-account.json).
+
+### Terraform (for activating Cloud Storage and BigQuery services)
++	Install Terraform on your machine/VM.
++	Change directory to the gcp_platform folder.
++	In the gcp_platform/variables.tf file, update the Terraform variables for project, region, and location according to your preferences.
++	Execute terraform init and terraform apply to create the Cloud Storage bucket and BigQuery dataset.
++	Open google cloud consoles, and navigate to bigquery. Execute the query for the SQL commands in the ./ddl_table.sql file.
+
+### DBT
++	Update sources.database in the ./de-project/airflow/data/dbt/user_activity/models/staging/schema.yml file according to your project Id.
++	We will use the materialize = incremental configuration for the DAU and MAU tables to handle "late arriving data".
+
+### Airflow
 1. Preparation
 •	Airflow will be deployed using Docker, so make sure Docker is installed on your machine/VM.
 •	Copy the service-account.json file to the ./airflow/data folder (to be used in creating a Google Cloud connection in Airflow).

@@ -76,7 +76,7 @@ The interesting thing here is that records with past event times may appear in t
 +	*dau* (daily active user): Contains a summary of the number of active users in daily units (based on event time).
 +	*mau* (monthly active user): Contains a summary of the number of active users in monthly units (based on event time).
 
-### Dashboard (Looker - optional)
+### Dashboard (Looker Studio - optional)
 
 ## Data Tools Used
 +	[Google Cloud Platform (Cloud Storage and BigQuery)](https://console.cloud.google.com/)
@@ -84,7 +84,7 @@ The interesting thing here is that records with past event times may appear in t
 +	[Docker](https://docs.docker.com/)
 +	[DBT (Data Build Tool)](https://docs.getdbt.com/)
 +	[Airflow](https://airflow.apache.org/docs/)
-+	Looker (optional)
++	Looker Studio (optional)
 
 ### Google Cloud Preparation
 +	Create a GCP account.
@@ -132,6 +132,6 @@ The interesting thing here is that records with past event times may appear in t
   - DAG *event_data_transformations*:
     Unpause the *event_data_transformations* DAG. This DAG runs using the data aware scheduling (dataset schedule) triggered by the *get_data* DAG. When running, this DAG will execute a BigQuery query to create an external table from the CSV file in Cloud Storage for a one-day range and then insert it into the event_data table. Next, Airflow will execute the DBT command to transform event_data table to upsert the DAU and MAU tables.
 
-### Looker (optional)
-Create dashboard using your prefered tools. Here we create visualizations using Looker with the event_data, dau, and mau tables. Below is example of dashboard created using looker studio
+### Looker Studio (optional)
+Create dashboard using your prefered tools. Here we create visualizations using Looker Studio with the event_data, dau, and mau tables. Below is example of the dashboard.
 ![Example Image](https://github.com/maulanaady/AquaTech-User-Activity-Analysis/blob/main/images/dashboard.png)

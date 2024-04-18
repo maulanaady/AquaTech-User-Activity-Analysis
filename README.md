@@ -79,6 +79,7 @@ The interesting thing here is that records with past event times may appear in t
 ### Dashboard (Looker Studio - optional)
 
 ## Data Tools Used
+![Diagram Image](https://github.com/maulanaady/AquaTech-User-Activity-Analysis/blob/main/images/diagram.png)
 +	[Google Cloud Platform (Cloud Storage and BigQuery)](https://console.cloud.google.com/)
 +	[Terraform](https://developer.hashicorp.com/terraform/docs)
 +	[Docker](https://docs.docker.com/)
@@ -135,3 +136,4 @@ The interesting thing here is that records with past event times may appear in t
 ### Looker Studio (optional)
 Create dashboard using your prefered tools. Here we create visualizations using Looker Studio with the event_data, dau, and mau tables. Below is example of the dashboard.
 ![Example Image](https://github.com/maulanaady/AquaTech-User-Activity-Analysis/blob/main/images/dashboard.png)
+

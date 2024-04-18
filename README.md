@@ -1,11 +1,11 @@
-# AquaTech User Activity Analysis
+## AquaTech User Activity Analysis
 # Introduction
 In the realm of aquatic-focused startups, understanding user behavior is paramount. In pursuit of this understanding, AquaTech has embarked on an analysis of user activity on its platform. Data pertaining to user activity is collected and temporarily stored in the internal storage platform, residing on user devices. Subsequently, this data is pulled by a tool every minute for all users. The pulled data is stored in JSON format with a timestamp naming convention, such as 20240402-113713.json, signifying the data pull time as April 2, 2024, at 11:37:13 AM.
 
 # Cloning the Repository
 To get started, clone this repository:
 ```
-git clone https://github.com/maulanaady/AquaTech-User-Activity-Analysis.git \
+git clone https://github.com/maulanaady/AquaTech-User-Activity-Analysis.git &&
 cd AquaTech-User-Activity-Analysis
 ```
 

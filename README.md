@@ -4,9 +4,8 @@ In the realm of aquatic-focused startups, understanding user behavior is paramou
 
 # Cloning the Repository
 To get started, clone this repository:
-```git clone git clone https://github.com/maulanaady/AquaTech-User-Activity-Analysis.git
-```
-```cd AquaTech-User-Activity-Analysis
+```git clone git clone https://github.com/maulanaady/AquaTech-User-Activity-Analysis.git &&
+cd AquaTech-User-Activity-Analysis
 ```
 
 Project Overview

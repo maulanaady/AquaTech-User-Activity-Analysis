@@ -12,6 +12,7 @@ cd AquaTech-User-Activity-Analysis
 ## Project Overview
 In this project, JSON files have been stored in the raw_data.zip file (located on Google Drive) with default folder and file names for the months of April and May 2024. To download the file, execute the bash script 
 ```
+chmod +x download_raw_data.sh
 ./download_raw_data.sh
 ```
 the output will be saved in the **./raw_data.zip** file.
@@ -22,7 +23,8 @@ unzip ./raw_data.zip -d ./airflow/data/
 ```
 However, if the current datetime is outside of April or May 2024, execute the bash script **rename.sh $1 $2 $3**, where parameter 1 represents the current year, parameter 2 represents the current month, and parameter 3 represents the next month, e.g.:
 ```
-bash ./rename.sh 2024 04 05
+chmod +x rename.sh
+./rename.sh 2024 04 05
 ```
 Note that executing the rename.sh script can be time-consuming. 
 
@@ -95,16 +97,20 @@ The interesting thing here is that records with past event times may appear in t
 +	Open google cloud consoles, and navigate to bigquery. Execute the query for the SQL commands in the *./ddl_table.sql* file.
 
 ### DBT
-+	Update sources.database in the **./de-project/airflow/data/dbt/user_activity/models/staging/schema.yml** file according to your project Id.
++	Update sources.database in the **./airflow/data/dbt/user_activity/models/staging/schema.yml** file according to your project Id.
 +	We will use the *materialize = incremental* configuration for the DAU and MAU tables to handle "late arriving data".
 
 ### Airflow
 + Preparation
-  - Airflow will be deployed using Docker, so make sure Docker is installed on your machine/VM.
+  - Airflow will be deployed using Docker (specifically docker compose), so make sure Docker (and docker compose plugin) is installed on your machine/VM.
   - Copy the service-account.json file to the **./airflow/data** folder (to be used in creating a Google Cloud connection in Airflow).
   - Navigate to the **./airflow directory** and execute 
     ```
-    docker-compose up -d
+    chmod ugo+w data
+    mkdir -p logs
+    mkdir -p config
+    mkdir -p plugins
+    docker compose up -d
     ```
   - Ensure all services are up and running (`docker ps`).
   - DBT commands will be executed via Airflow, so we need to install dbt-bigquery and astronomer-cosmos in the airflow worker and scheduler containers:
@@ -113,7 +119,7 @@ The interesting thing here is that records with past event times may appear in t
     docker exec airflow-airflow-scheduler-1 bash -c "pip install astronomer-cosmos dbt-bigquery" && 
     docker restart airflow-airflow-worker-1
     ```
-  - Log in to the Airflow web server UI (http://localhost:8080) with the username airflow and password airflow. Hover over the admin tab and click connections.
+  - Log in to the Airflow web server UI (http://localhost:8080) with the username airflow and password: *airflow*. Hover over the admin tab and click connections.
   - Create a new connection with **Connection Type = Google Cloud** and **Connection Id = *‘google_client’***. Fill in the Project Id according to your project Id, and fill in the **Keyfile Path** referring to service-account.json **(/opt/airflow/data/service-account.json)**.
   - Click the test button at the bottom to test the connection to Google Cloud with the predefined configuration. A successful connection test will display *"Connection successfully tested"* at the top of the web page (scroll up), and then save the connection.
 

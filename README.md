@@ -99,31 +99,35 @@ The interesting thing here is that records with past event times may appear in t
 +	We will use the materialize = incremental configuration for the DAU and MAU tables to handle "late arriving data".
 
 ### Airflow
-1. Preparation
-•	Airflow will be deployed using Docker, so make sure Docker is installed on your machine/VM.
-•	Copy the service-account.json file to the ./airflow/data folder (to be used in creating a Google Cloud connection in Airflow).
-•	Navigate to the ./airflow directory and execute docker-compose up -d.
-•	Ensure all services are up and running (docker ps).
-•	DBT commands will be executed via Airflow, so we need to install dbt-bigquery and astronomer-cosmos in the airflow worker and scheduler containers:
-bashCopy code
-docker exec airflow-airflow-worker-1 bash -c "pip install astronomer-cosmos dbt-bigquery"  &&
-docker exec airflow-airflow-scheduler-1 bash -c "pip install astronomer-cosmos dbt-bigquery" && docker restart airflow-airflow-worker-1
++ Preparation
+  - Airflow will be deployed using Docker, so make sure Docker is installed on your machine/VM.
+  - Copy the service-account.json file to the **./airflow/data** folder (to be used in creating a Google Cloud connection in Airflow).
+  - Navigate to the **./airflow directory** and execute 
+    ```
+    docker-compose up -d
+    ```
+  - Ensure all services are up and running (`docker ps`).
+  - DBT commands will be executed via Airflow, so we need to install dbt-bigquery and astronomer-cosmos in the airflow worker and scheduler containers:
+    ```
+    docker exec airflow-airflow-worker-1 bash -c "pip install astronomer-cosmos dbt-bigquery"  &&
+    docker exec airflow-airflow-scheduler-1 bash -c "pip install astronomer-cosmos dbt-bigquery" && docker restart airflow-airflow-worker-1
+    ```
+  - Log in to the Airflow web server UI (http://localhost:8080) with the username airflow and password airflow. Hover over the admin tab and click connections.
+  - Create a new connection with Connection Type = **Google Cloud** and Connection Id = _‘google_client’_. Fill in the Project Id according to your project Id, and fill in the Keyfile Path referring to service-account.json **(/opt/airflow/data/service-account.json)**.
+  - Click the test button at the bottom to test the connection to Google Cloud with the predefined configuration. A successful connection test will display "Connection successfully tested" at the top of the web page (scroll up), and then save the connection.
 
-•	Log in to the Airflow web server UI (http://localhost:8080) with the username airflow and password airflow. Hover over the admin tab and click connections.
-•	Create a new connection with Connection Type = Google Cloud and Connection Id = ‘google_client’. Fill in the Project Id according to your project Id, and fill in the Keyfile Path referring to service-account.json (/opt/airflow/data/service-account.json).
-•	Click the test button at the bottom to test the connection to Google Cloud with the predefined configuration. A successful connection test will display "Connection successfully tested" at the top of the web page (scroll up), and then save the connection.
-2. DAGs
++ DAGs
 In this project, we run two DAGs: get_data and event_data_transformations.
 
-DAG get_data:
-This DAG runs every hour (schedule = hourly) and retrieves and processes raw data JSON files according to the execution time parameter in Airflow (not all JSON files are processed at once). The output of one run of the DAG is a CSV file uploaded to Cloud Storage with the naming format: output_{data_interval_start}_{data_interval_end}.csv (e.g., output_20240413030000_20240413040000.csv is the file generated when the DAG runs for the schedule interval from April 13, 2024, at 03:00:00 to April 13, 2024, at 04:00:00). Therefore, in one day, 24 files will be generated. 
-When the data_interval_start is at 00:00 early in the morning, this DAG will trigger the event_data_transformations DAG for execution. 
+  - DAG get_data:
+    This DAG runs every hour (schedule = hourly) and retrieves and processes raw data JSON files according to the execution time parameter in Airflow (not all JSON files are processed at once). The output of one run of the DAG is a CSV file uploaded to Cloud Storage with the naming format: _output_{data_interval_start}_{data_interval_end}.csv_ (e.g., output_20240413030000_20240413040000.csv is the file generated when the DAG runs for the schedule interval from April 13, 2024, at 03:00:00 to April 13, 2024, at 04:00:00). Therefore, in one day, 24 files will be generated. 
+    When the data_interval_start is at 00:00 early in the morning, this DAG will trigger the event_data_transformations DAG for execution. 
 
-Activate the DAG by clicking on the DAG tab on the web and unpausing the get_data DAG, then the job to extract data from the JSON file will run and store the results in Cloud Storage.
+    Activate the DAG by clicking on the DAG tab on the web and unpausing the get_data DAG, then the job to extract data from the JSON file will run and store the results in Cloud Storage.
 
-DAG event_data_transformations:
-Unpause the event_data_transformations DAG. This DAG runs using the data aware scheduling (dataset schedule) triggered by the get_data DAG. When running, this DAG will execute a BigQuery query to create an external table from the CSV file in Cloud Storage for a one-day range and then insert it into the event_data table. Next, Airflow will execute the DBT command to transform event_data table to upsert the DAU and MAU tables.
+  - DAG event_data_transformations:
+    Unpause the event_data_transformations DAG. This DAG runs using the data aware scheduling (dataset schedule) triggered by the get_data DAG. When running, this DAG will execute a BigQuery query to create an external table from the CSV file in Cloud Storage for a one-day range and then insert it into the event_data table. Next, Airflow will execute the DBT command to transform event_data table to upsert the DAU and MAU tables.
 
-Looker (optional)
+### Looker (optional)
 Create visualizations according to your preferences. Here we create visualizations using Looker with the DAU and MAU datasources. Below is example of dashboard created using looker studio
 ![Example Image](https://github.com/maulanaady/AquaTech-User-Activity-Analysis/blob/main/images/dashboard.png)

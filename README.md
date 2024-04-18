@@ -1,30 +1,45 @@
-## AquaTech User Activity Analysis
-# Introduction
-In the realm of aquatic-focused startups, understanding user behavior is paramount. In pursuit of this understanding, AquaTech has embarked on an analysis of user activity on its platform. Data pertaining to user activity is collected and temporarily stored in the internal storage platform, residing on user devices. Subsequently, this data is pulled by a tool every minute for all users. The pulled data is stored in JSON format with a timestamp naming convention, such as 20240402-113713.json, signifying the data pull time as April 2, 2024, at 11:37:13 AM.
+# AquaTech User Activity Analysis
+## Introduction
+In the realm of aquatic-focused startups, understanding user behavior is paramount. In pursuit of this understanding, AquaTech has embarked on an analysis of user activity on its platform. Data pertaining to user activity is collected and temporarily stored in the internal storage platform, residing on user devices. Subsequently, this data is pulled by a tool every minute for all users. The pulled data is stored in JSON format with a timestamp naming convention, such as **20240402-113713.json**, signifying the data pull time as April 2, 2024, at 11:37:13 AM.
 
-# Cloning the Repository
+## Cloning the Repository
 To get started, clone this repository:
 ```
 git clone https://github.com/maulanaady/AquaTech-User-Activity-Analysis.git &&
 cd AquaTech-User-Activity-Analysis
 ```
 
-Project Overview
-In this project, JSON files have been stored in the raw_data.zip file (located on Google Drive) with default folder and file names for the months of April and May 2024. To download the file, execute the bash script ./download_raw_data.sh, and the output will be saved in the ./raw_data.zip file.
+## Project Overview
+In this project, JSON files have been stored in the raw_data.zip file (located on Google Drive) with default folder and file names for the months of April and May 2024. To download the file, execute the bash script 
+```
+./download_raw_data.sh
+```
+the output will be saved in the ./raw_data.zip file.
+
 If the current datetime falls within April or May 2024, simply unzip the raw_data.zip file and save it to the ./airflow/data/ folder:
-bashCopy code
+```
 unzip ./raw_data.zip -d ./airflow/data/ 
-However, if the current datetime is outside of April or May 2024, execute the bash script rename.sh $1 $2 $3, where parameter 1 represents the current year, parameter 2 represents the current month, and parameter 3 represents the next month (e.g., bash ./rename.sh 2024 04 05). Note that executing the rename.sh script can be time-consuming. The output of the rename.sh execution will be saved in the ./airflow/data/raw_data folder with folder and file structures corresponding to the current datetime. 
-Execute the tree ./airflow/data/raw_data command to view the folder structure.
+```
+However, if the current datetime is outside of April or May 2024, execute the bash script **rename.sh $1 $2 $3**, where parameter 1 represents the current year, parameter 2 represents the current month, and parameter 3 represents the next month, e.g.:
+```
+bash ./rename.sh 2024 04 05
+```
+Note that executing the rename.sh script can be time-consuming. 
+The output of the rename.sh execution will be saved in the **./airflow/data/raw_data** folder with folder and file structures corresponding to the current datetime. 
+Execute 
+```tree ./airflow/data/raw_data
+``` 
+command to view the folder structure.
 Example File Structure:
-./airflow/data/raw_data
+```./airflow/data/raw_data
 ├── 2024-04-01
 │  ├── 20240401-000000.json
 │  ├── 20240401-000001.json
 │  ├── 20240401-000010.json
 │  ├── 20240401-000017.json
+```
 
-Problem Statement
+## Problem Statement
 Although the filenames are created in the format of the current datetime (to match the data_interval_start parameter in Airflow), the actual raw data is for event time in 2022 (timestamp = 2022). Below is an example JSON record from the raw data:
 [{
   "distinct_id": "21920",

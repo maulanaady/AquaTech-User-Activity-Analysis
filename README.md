@@ -78,7 +78,7 @@ The interesting thing here is that records with past event times may appear in t
 
 ### Dashboard (Looker Studio - optional)
 
-## Data Tools Used
+## Data Tech Stacks
 ![Diagram Image](https://github.com/maulanaady/AquaTech-User-Activity-Analysis/blob/main/images/flow_chart.png)
 +	[Google Cloud Platform (Cloud Storage and BigQuery)](https://console.cloud.google.com/)
 +	[Terraform](https://developer.hashicorp.com/terraform/docs)

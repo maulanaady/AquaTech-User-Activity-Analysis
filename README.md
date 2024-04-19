@@ -131,6 +131,8 @@ The interesting thing here is that records with past *event times* may appear in
     Activate the DAG by clicking on the DAGs tab on the web and unpausing the get_data DAG, then the job to extract data from the JSON file will run and store the results in Cloud Storage.
 
   - DAG *event_data_transformations*:
+    Edit *project* value at *profile_args* dict for *ProfileConfig* configration to your preferences project id.
+
     Unpause the *event_data_transformations* DAG. This DAG runs using the data aware scheduling (dataset schedule) triggered by the *get_data* DAG. When running, this DAG will execute a BigQuery query to create an external table from the CSV file in Cloud Storage for a one-day range and then insert it into the *event_data* table. Next, Airflow will execute the DBT command to transform *event_data* table to upsert the *dau* and *mau* tables.
 
 ### Looker Studio (optional)

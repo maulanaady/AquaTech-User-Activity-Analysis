@@ -40,7 +40,7 @@ execution_config = ExecutionConfig(
 
 @dag(
     schedule=[transform_dataset],
-    # start_date=datetime(2024, 2, 29),
+    start_date=datetime(2024, 2, 29),
     catchup=True,
     max_active_runs=1,
     default_args={"retries": 2},    

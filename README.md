@@ -106,7 +106,7 @@ The interesting thing here is that records with past *event times* may appear in
 ### Airflow
 + Preparation
   - Airflow will be deployed using Docker (specifically docker compose), so make sure Docker (and docker compose plugin) is installed on your machine/VM.
-  - Copy the service-account.json file to the **./airflow/data** folder (to be used in creating a Google Cloud connection in Airflow).
+  - Copy the google cloud service-account.json file to the **./airflow/data** folder (to be used in creating a Google Cloud connection in Airflow).
   - Navigate to the **./airflow directory** and execute 
     ```
     chmod ugo+w data &&

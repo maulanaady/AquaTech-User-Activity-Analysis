@@ -30,13 +30,13 @@ rm -f ./raw_data.zip
 ```
 Note that executing the rename.sh script can be time-consuming. 
 
-The output of the rename.sh execution will be saved in the **./airflow/data/raw_data** folder with folder and file structures corresponding to the current datetime. 
+The output of the **rename.sh** execution will be saved in the **./airflow/data/raw_data** folder with folder and file structures corresponding to the current datetime. 
 Execute 
 ```
 tree ./airflow/data/raw_data
 ``` 
 command to view the folder structure.
-Example File Structure:
+Example folder/file Structure:
 ```
 ./airflow/data/raw_data
 ├── 2024-04-01
@@ -47,7 +47,7 @@ Example File Structure:
 ```
 
 ## Problem Statement
-Although the filenames are created in the format of the current datetime (to match the _data_interval_start_ parameter in Airflow), the actual raw data is for event time in 2022 (timestamp = 2022). Below is an example JSON record from the raw data:
+Although the name of folders and files are adjusted in the format of the current datetime (merely, this adjustment is to match the _data_interval_start_ parameter in Airflow), the actual raw data is for *event time* in 2022 (*timestamp* = 2022). Below is an example JSON record from the raw data:
 ```
 [{
   "distinct_id": "21920",
@@ -67,10 +67,10 @@ Although the filenames are created in the format of the current datetime (to mat
   "$geoip_subdivision_1_name": "South Sumatra"
 }]
 ```
-We assume to process the data for the current datetime **(processing datetime = current datetime), but the events themselves occurred in 2022 (event_time = 2022).**
-The interesting thing here is that records with past event times may appear in the new JSON files (e.g., a JSON record with "timestamp": "2022-09-22T11:09:43.929Z" appears in the file 20240413-030129.json). This is a kind of **"late arriving data"**. These delayed data will affect the daily active user (DAU) and monthly active user (MAU) tables. Therefore, _if there are late-arriving records, the DAU for the related day (event_time) will be recalculated, as will the MAU for the related month_.
+We will process the data for the current datetime **(processing datetime = current datetime), but the events themselves occurred in 2022 (event_time = 2022).**
+The interesting thing here is that records with past *event times* may appear in the new JSON files (e.g., a JSON record with *"timestamp": "2022-09-22T11:09:43.929Z"* appears in the file *20240413-030129.json*). This is a kind of *"late arriving data"*. These delayed data will affect the daily active user (dau) and monthly active user (mau) tables. Therefore, _if there are late-arriving records, the dau for the related day (event_time) will be recalculated, as will the mau for the related month_.
 
-## Output
+## Desired Output
 ### Tables:
 +	*event_data*: Contains parsed data from JSON files plus a *dl_updated_at* column indicating the timestamp when records were processed (_processing time_).
 +	*dau* (daily active user): Contains a summary of the number of active users in daily units (based on event time).

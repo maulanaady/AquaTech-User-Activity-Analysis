@@ -68,7 +68,7 @@ Although the name of folders and files are adjusted in the format of the current
 }]
 ```
 We will process the data for the current datetime **(processing datetime = current datetime), but the events themselves occurred in 2022 (event_time = 2022).**
-The interesting thing here is that records with past *event times* may appear in the new JSON files (e.g., a JSON record with *"timestamp": "2022-09-22T11:09:43.929Z"* appears in the file *20240413-030129.json*). This is a kind of *"late arriving data"*. These delayed data will affect the daily active user (dau) and monthly active user (mau) tables. Therefore, _if there are late-arriving records, the dau for the related day (event_time) will be recalculated, as will the mau for the related month_.
+The interesting thing here is that records with past *event times* may appear in the new JSON files (e.g., a JSON record with *"timestamp": "2022-09-22T11:09:43.929Z"* appears in the file *20240413-030129.json*). This is a kind of *"late arriving data"*. These delayed data will affect the daily active user (*dau*) and monthly active user (*mau*) tables. Therefore, _if there are late-arriving records, the *dau* for the related day (event_time) will be recalculated, as will the *mau* for the related month_.
 
 ## Desired Output
 ### Tables:
@@ -95,13 +95,13 @@ The interesting thing here is that records with past *event times* may appear in
 ### Terraform (for activating Cloud Storage and BigQuery services)
 +	Install Terraform on your machine/VM.
 +	Change directory to the **gcp_terraform** folder.
-+	In the *gcp_terraform/variables.tf file*, update the Terraform variables for project, region, and location according to your preferences.
++	In the *gcp_terraform/variables.tf* file, update the Terraform variables for project, region, and location according to your preferences.
 +	Execute `terraform init` and `terraform apply` to create the Cloud Storage bucket and BigQuery dataset.
-+	Open google cloud consoles, and navigate to bigquery. Execute the query for the SQL commands in the *./ddl_table.sql* file.
++	Open google cloud console, and navigate to bigquery. Execute the query for the SQL commands in the *./ddl_table.sql* file.
 
 ### DBT
 +	Update sources.database in the **./airflow/data/dbt/user_activity/models/staging/schema.yml** file according to your project Id.
-+	We will use the *materialize = incremental* configuration for the dau and mau tables to handle "late arriving data".
++	We will use the *materialize = incremental* configuration for the *dau* and *mau* tables to handle *"late arriving data"*.
 
 ### Airflow
 + Preparation
@@ -131,9 +131,9 @@ The interesting thing here is that records with past *event times* may appear in
     Activate the DAG by clicking on the DAG tab on the web and unpausing the get_data DAG, then the job to extract data from the JSON file will run and store the results in Cloud Storage.
 
   - DAG *event_data_transformations*:
-    Unpause the *event_data_transformations* DAG. This DAG runs using the data aware scheduling (dataset schedule) triggered by the *get_data* DAG. When running, this DAG will execute a BigQuery query to create an external table from the CSV file in Cloud Storage for a one-day range and then insert it into the event_data table. Next, Airflow will execute the DBT command to transform event_data table to upsert the DAU and MAU tables.
+    Unpause the *event_data_transformations* DAG. This DAG runs using the data aware scheduling (dataset schedule) triggered by the *get_data* DAG. When running, this DAG will execute a BigQuery query to create an external table from the CSV file in Cloud Storage for a one-day range and then insert it into the event_data table. Next, Airflow will execute the DBT command to transform event_data table to upsert the *dau* and *mau* tables.
 
 ### Looker Studio (optional)
-Create dashboard using your prefered tools. Here we create visualizations using Looker Studio with the event_data, dau, and mau tables. Below is example of the dashboard.
+Create dashboard using your prefered tools. Here we create visualizations using Looker Studio with the event_data, *dau*, and *mau* tables. Below is example of the dashboard.
 ![Example Image](https://github.com/maulanaady/AquaTech-User-Activity-Analysis/blob/main/images/dashboard.png)
 

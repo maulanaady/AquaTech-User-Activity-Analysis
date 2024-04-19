@@ -126,7 +126,7 @@ The interesting thing here is that records with past *event times* may appear in
 
   - DAG *get_data*:
     This DAG runs every hour (schedule = hourly) and retrieves and processes raw data JSON files according to the execution time parameter in Airflow (not all JSON files are processed at once). The output of one run of the DAG is a CSV file uploaded to Cloud Storage with the naming format: *output_{data_interval_start}_{data_interval_end}.csv (e.g., output_20240413030000_20240413040000.csv is the file generated when the DAG runs for the schedule interval from April 13, 2024, at 03:00:00 to April 13, 2024, at 04:00:00)*. Therefore, in one day, 24 files will be generated. 
-    When the data_interval_start is at 00:00 early in the morning, this DAG will trigger the *event_data_transformations* DAG for execution. 
+    When the *data_interval_start* is at 00:00 early in the morning, this DAG will trigger the *event_data_transformations* DAG for execution. 
 
     Activate the DAG by clicking on the DAGs tab on the web and unpausing the get_data DAG, then the job to extract data from the JSON file will run and store the results in Cloud Storage.
 

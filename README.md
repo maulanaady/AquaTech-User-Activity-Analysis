@@ -101,15 +101,19 @@ We set up a batch data pipeline (using mixed cloud based and local based) to ing
     - BigQuery -> BigQuery Admin
     - Compute Engine -> Compute Admin
 
-+	Download the service account JSON file (Service Account -> Actions -> Manage Keys -> Create a New Key -> JSON)
-
-  Save this json file as service-account.json in the **gcp_terraform** folder.
++	Download the service account JSON file (Service Account -> Actions -> Manage Keys -> Create a New Key -> JSON). Save this json file as *service-account.json* in the **gcp_terraform** folder.
 
 ### Terraform (for activating Cloud Storage and BigQuery services)
 +	Install Terraform on your machine/VM.
 +	Change directory to the **gcp_terraform** folder.
 +	In the *gcp_terraform/variables.tf* file, update the Terraform variables for project, region, and location according to your preferences.
-+	Execute `terraform init` and `terraform apply` to create the Cloud Storage bucket and BigQuery dataset.
++	Execute 
+  ```
+  terraform init
+  terraform plan
+  terraform apply
+  ```
+  to create the Cloud Storage bucket and BigQuery dataset.
 +	Open google cloud console, and navigate to bigquery. Execute the query for the SQL commands in the *./ddl_table.sql* file.
 
 ### DBT

@@ -1,6 +1,6 @@
 # AquaTech User Activity Analysis
 ## Introduction
-In the realm of aquatic-focused startups, understanding user behavior and user growth are paramount. In pursuit of this understanding, AquaTech has embarked on an analysis of user activity on its platform. They want to analyze their user growth in terms of *daily active user (DAU)* and *monthly active user (MAU)*. Beside that, they want to know what kind of activities mostly user accessed in their platform. Data pertaining to user activity is collected and temporarily stored in the internal storage platform, residing on user devices. Subsequently, this data is pulled by a device every minute for all users. The pulled data is stored in JSON format with a timestamp naming convention, such as **20221130-111132.json**, signifying the data pull time as November 30, 2022, at 11:11:32 AM.
+In the realm of aquatic-focused startups, understanding user behavior and user growth are paramount. In pursuit of this understanding, AquaTech has embarked on an analysis of user activity on its platform. They want to analyze their user growth in terms of *daily active user (DAU)* and *monthly active user (MAU)*. Beside that, they want to know what kind of activities mostly user accessed in their platform. Data pertaining to user activity is collected and temporarily stored in the internal storage platform, residing on user devices. Subsequently, this data is pulled by a device every minute for all users. The pulled data is stored in JSON format with a timestamp naming convention, such as *20221130-111132.json*, signifying the data pull time as November 30, 2022, at 11:11:32 AM.
 
 ## Data Source
 In this project, JSON files have been stored in the raw_data.zip file (located on Google Drive). To download the file, execute the bash script 
@@ -53,18 +53,21 @@ Below is an example JSON record from the raw data:
   "$geoip_subdivision_1_name": "South Sumatra"
 }]
 ```
-The interesting thing here is that records with past *event times* may appear in the new JSON files (e.g., a JSON record with *"timestamp": "2022-09-22T11:09:43.929Z"* appears in the file *20221013-030129.json*). This is a kind of *"late arriving data"*. These delayed data will affect the daily active user (*dau*) and monthly active user (*mau*) tables. Therefore, _if there are late-arriving records, the *dau* for the related day (event_time) will be recalculated, as will the *mau* for the related month_.
+The interesting thing here is that records with past *event times*(*timetamp*) may appear in the new JSON files (e.g., a JSON record with *"timestamp": "2022-09-22T11:09:43.929Z"* appears in the file *20221013-030129.json*). This is a kind of *"late arriving data"*. These delayed data will affect the daily active user (*dau*) and monthly active user (*mau*) tables. Therefore, _if there are late-arriving records, the *dau* for the related day (event_time) will be recalculated, as will the *mau* for the related month_.
+
 To handle this case, we will add *dl_updated_at* column for each of our table indicating *data processing time*.
 
 ## Desired Output
 ### Tables:
-+	*event_data*: Contains parsed data from JSON files.
++	*event_data*: Contains parsed data from JSON files, with *timestamp* key in json is rename to *event_time* column.
 +	*dau* (daily active user): Contains a summary of the number of active users in daily units (based on *event time*).
 +	*mau* (monthly active user): Contains a summary of the number of active users in monthly units (based on *event time*).
 
 ### Dashboard (Looker Studio - optional)
 
 ## Cloning the Repository
+*Note: to follow along this tutorial, you need to use linux based OS or if you have windows OS, you can use Windows Subsystem for linux(WSL).*
+
 To get started, clone this repository:
 ```
 git clone https://github.com/maulanaady/AquaTech-User-Activity-Analysis.git &&
@@ -73,6 +76,8 @@ cd AquaTech-User-Activity-Analysis
 
 ## Data Tech Stacks
 ![Diagram Image](https://github.com/maulanaady/AquaTech-User-Activity-Analysis/blob/main/images/flow_chart.png)
+We set up a batch data pipeline (using mixed cloud based and local) to ingest, process and visualize the data.
+
 +	[Google Cloud Platform (Cloud Storage and BigQuery)](https://console.cloud.google.com/)
 +	[Terraform](https://developer.hashicorp.com/terraform/docs)
 +	[Docker](https://docs.docker.com/)

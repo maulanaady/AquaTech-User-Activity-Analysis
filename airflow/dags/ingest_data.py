@@ -29,7 +29,8 @@ def _validateJSON(jsonData):
 
 with DAG(
     dag_id="ingest_data",
-    start_date=pendulum.today('UTC').add(days=-15),
+    start_date=datetime.datetime(2022, 10, 1),
+    start_date=datetime.datetime(2022, 11, 30),
     schedule='0 */1 * * *',
     max_active_runs=1,
     catchup=True) as dag:

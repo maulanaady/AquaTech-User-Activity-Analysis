@@ -1,8 +1,10 @@
 # AquaTech User Activity Analysis
 ## Introduction
-In the realm of aquatic-focused startups, understanding user behavior and user growth are paramount. In pursuit of this understanding, AquaTech has embarked on an analysis of user activity on its platform. They want to analyze their user growth in terms of *daily active user (DAU)* and *monthly active user (MAU)*. Beside that, they want to know what kind of activities mostly user accessed in their platform. Data pertaining to user activity is collected and temporarily stored in the internal storage platform, residing on user devices. Subsequently, this data is pulled by a device every minute for all users. The pulled data is stored in JSON format with a timestamp naming convention, such as *20221130-111132.json*, signifying the data pull time as November 30, 2022, at 11:11:32 AM.
+In the realm of aquatic-focused startups, understanding user behavior and user growth are paramount. In pursuit of this understanding, AquaTech has embarked on an analysis of user activity on its platform. They want to analyze their user growth in terms of *daily active user (DAU)* and *monthly active user (MAU)*. Of course there are more rigorous criteria about *DAU* and *MAU*, but that's outside the scope of project, here we take a simple approach by counting distinct user based on *event time*.
 
-## Data Source
+Beside that, they want to know what kind of activities mostly user accessed in their platform. Data pertaining to user activity is collected and temporarily stored in the internal storage platform, residing on user devices. Subsequently, this data is pulled by a device every minute for all users. The pulled data is stored in JSON format with a timestamp naming convention, such as *20221130-111132.json*, signifying the data pull time as November 30, 2022, at 11:11:32 AM.
+
+## Data Source Preparation
 In this project, JSON files have been stored in the raw_data.zip file (located on Google Drive). To download the file, execute the bash script 
 ```
 chmod +x download_raw_data.sh &&
@@ -58,15 +60,15 @@ The interesting thing here is that records with past *event times*(*timetamp*) m
 To handle this case, we will add *dl_updated_at* column for each of our table indicating *data processing time*.
 
 ## Desired Output
-### Tables:
+#### Tables:
 +	*event_data*: Contains parsed data from JSON files, with *timestamp* key in json is rename to *event_time* column.
 +	*dau* (daily active user): Contains a summary of the number of active users in daily units (based on *event time*).
 +	*mau* (monthly active user): Contains a summary of the number of active users in monthly units (based on *event time*).
 
-### Dashboard (Looker Studio - optional)
+#### Dashboard (Looker Studio - optional)
 
 ## Cloning the Repository
-*Note: to follow along this tutorial, you need to use linux based OS or if you have windows OS, you can use Windows Subsystem for linux(WSL).*
+*Note: to follow along this tutorial, you need to use linux based OS or if you have windows OS, you can use Windows Subsystem for linux (WSL).*
 
 To get started, clone this repository:
 ```
@@ -81,7 +83,7 @@ cd AquaTech-User-Activity-Analysis
 ![Diagram Image](images/flow_chart.png)
 </details>
 
-We set up a batch data pipeline (using mixed cloud based and local) to ingest, process and visualize the data.
+We set up a batch data pipeline (using mixed cloud based and local based) to ingest, process and visualize the data.
 
 +	[Google Cloud Platform (Cloud Storage and BigQuery)](https://console.cloud.google.com/)
 +	[Terraform](https://developer.hashicorp.com/terraform/docs)
@@ -92,8 +94,20 @@ We set up a batch data pipeline (using mixed cloud based and local) to ingest, p
 
 ### Google Cloud Preparation
 +	Create a GCP account.
-+	Create a service account with appropriate access.
-+	Download the service account JSON file and save it in the **gcp_terraform** folder (rename the file to service-account.json).
++ Create a new project via: https://console.cloud.google.com/projectcreate
++	https://console.cloud.google.com/iam-admin/serviceaccounts
+Create a service account in your Google Cloud project
+IAM & Admin -> Service Accounts -> Create a Service Account
+<p>With Roles:
+
+  * Cloud Storage -> Storage Admin
+  * BigQuery -> BigQuery Admin
+  * Compute Engine -> Compute Admin
+Note: this is meant to be a demo and the permissions granted above are overly broad.
+
++	Download the service account JSON file (Service Account -> Actions -> Manage Keys -> Create a New Key -> JSON)
+
+  Save this json file as service-account.json in the **gcp_terraform** folder.
 
 ### Terraform (for activating Cloud Storage and BigQuery services)
 +	Install Terraform on your machine/VM.

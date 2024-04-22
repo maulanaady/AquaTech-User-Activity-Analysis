@@ -95,8 +95,7 @@ We set up a batch data pipeline (using mixed cloud based and local based) to ing
 ### Google Cloud Preparation
 +	Create a GCP account.
 + Create a new project via: https://console.cloud.google.com/projectcreate
-+	https://console.cloud.google.com/iam-admin/serviceaccounts
-Create a service account in your Google Cloud project
++	Create a ![service account](https://console.cloud.google.com/iam-admin/serviceaccounts) in your Google Cloud project
 IAM & Admin -> Service Accounts -> Create a Service Account
 <p>With Roles:
 

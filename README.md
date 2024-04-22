@@ -100,8 +100,6 @@ We set up a batch data pipeline (using mixed cloud based and local based) to ing
     - Cloud Storage -> Storage Admin
     - BigQuery -> BigQuery Admin
     - Compute Engine -> Compute Admin
-    
-  Note: this is meant to be a demo and the permissions granted above are overly broad.
 
 +	Download the service account JSON file (Service Account -> Actions -> Manage Keys -> Create a New Key -> JSON)
 

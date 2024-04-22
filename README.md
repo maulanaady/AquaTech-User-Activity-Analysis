@@ -107,13 +107,12 @@ We set up a batch data pipeline (using mixed cloud based and local based) to ing
 +	Install Terraform on your machine/VM.
 +	Change directory to the **gcp_terraform** folder.
 +	In the *gcp_terraform/variables.tf* file, update the Terraform variables for project, region, and location according to your preferences.
-+	Execute 
++	Execute following command to create the Cloud Storage bucket and BigQuery dataset.
   ```
   terraform init
   terraform plan
   terraform apply
   ```
-  to create the Cloud Storage bucket and BigQuery dataset.
 +	Open google cloud console, and navigate to bigquery. Execute the query for the SQL commands in the *./ddl_table.sql* file.
 
 ### DBT

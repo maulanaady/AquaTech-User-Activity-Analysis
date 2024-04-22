@@ -1,36 +1,21 @@
 # AquaTech User Activity Analysis
 ## Introduction
-In the realm of aquatic-focused startups, understanding user behavior is paramount. In pursuit of this understanding, AquaTech has embarked on an analysis of user activity on its platform. Data pertaining to user activity is collected and temporarily stored in the internal storage platform, residing on user devices. Subsequently, this data is pulled by a device every minute for all users. The pulled data is stored in JSON format with a timestamp naming convention, such as **20240402-113713.json**, signifying the data pull time as April 2, 2024, at 11:37:13 AM.
+In the realm of aquatic-focused startups, understanding user behavior and user growth are paramount. In pursuit of this understanding, AquaTech has embarked on an analysis of user activity on its platform. They want to analyze their user growth in terms of *daily active user (DAU)* and *monthly active user (MAU)*. Beside that, they want to know what kind of activities mostly user accessed in their platform. Data pertaining to user activity is collected and temporarily stored in the internal storage platform, residing on user devices. Subsequently, this data is pulled by a device every minute for all users. The pulled data is stored in JSON format with a timestamp naming convention, such as **20221130-111132.json**, signifying the data pull time as November 30, 2022, at 11:11:32 AM.
 
-## Cloning the Repository
-To get started, clone this repository:
-```
-git clone https://github.com/maulanaady/AquaTech-User-Activity-Analysis.git &&
-cd AquaTech-User-Activity-Analysis
-```
-
-## Project Overview
-In this project, JSON files have been stored in the raw_data.zip file (located on Google Drive) with default folder and file names for the months of April and May 2024. To download the file, execute the bash script 
+## Data Source
+In this project, JSON files have been stored in the raw_data.zip file (located on Google Drive). To download the file, execute the bash script 
 ```
 chmod +x download_raw_data.sh &&
 ./download_raw_data.sh
 ```
 the output will be saved in the **./raw_data.zip** file.
 
-If the current datetime falls within April or May 2024, simply unzip the raw_data.zip file and save it to the ./airflow/data/ folder:
+Simply unzip the raw_data.zip file and save it to the ./airflow/data/ folder:
 ```
 unzip ./raw_data.zip -d ./airflow/data/ &&
 rm -f ./raw_data.zip
 ```
-However, if the current datetime is outside of April or May 2024, execute the bash script **rename.sh $1 $2 $3**, where parameter 1 represents the current year, parameter 2 represents the current month, and parameter 3 represents the next month, e.g.:
-```
-chmod +x rename.sh &&
-./rename.sh 2024 04 05 &&
-rm -f ./raw_data.zip
-```
-Note that executing the rename.sh script can be time-consuming. 
-
-The output of the **rename.sh** execution will be saved in the **./airflow/data/raw_data** folder with folder and file structures corresponding to the current datetime. 
+The output will be saved in the **./airflow/data/raw_data** folder with folder and file structures corresponding to the datetime format. 
 Execute 
 ```
 tree ./airflow/data/raw_data
@@ -39,15 +24,16 @@ command to view the folder structure.
 Example folder/file Structure:
 ```
 ./airflow/data/raw_data
-├── 2024-04-01
-│  ├── 20240401-000000.json
-│  ├── 20240401-000001.json
-│  ├── 20240401-000010.json
-│  ├── 20240401-000017.json
+├── 2022-10-01
+│  ├── 20221001-000000.json
+│  ├── 20221001-000001.json
+│  ├── 20221001-000010.json
+│  ├── 20221001-000017.json
+...
 ```
 
 ## Problem Statement
-Although the name of folders and files are adjusted in the format of the current datetime (merely, this adjustment is to match the _data_interval_start_ parameter in Airflow), the actual raw data is for *event time* in 2022 (*timestamp* = 2022). Below is an example JSON record from the raw data:
+Below is an example JSON record from the raw data:
 ```
 [{
   "distinct_id": "21920",
@@ -67,16 +53,23 @@ Although the name of folders and files are adjusted in the format of the current
   "$geoip_subdivision_1_name": "South Sumatra"
 }]
 ```
-We will process the data for the current datetime **(processing datetime = current datetime), but the events themselves occurred in 2022 (event_time = 2022).**
-The interesting thing here is that records with past *event times* may appear in the new JSON files (e.g., a JSON record with *"timestamp": "2022-09-22T11:09:43.929Z"* appears in the file *20240413-030129.json*). This is a kind of *"late arriving data"*. These delayed data will affect the daily active user (*dau*) and monthly active user (*mau*) tables. Therefore, _if there are late-arriving records, the *dau* for the related day (event_time) will be recalculated, as will the *mau* for the related month_.
+The interesting thing here is that records with past *event times* may appear in the new JSON files (e.g., a JSON record with *"timestamp": "2022-09-22T11:09:43.929Z"* appears in the file *20221013-030129.json*). This is a kind of *"late arriving data"*. These delayed data will affect the daily active user (*dau*) and monthly active user (*mau*) tables. Therefore, _if there are late-arriving records, the *dau* for the related day (event_time) will be recalculated, as will the *mau* for the related month_.
+To handle this case, we will add *dl_updated_at* column for each of our table indicating *data processing time*.
 
 ## Desired Output
 ### Tables:
-+	*event_data*: Contains parsed data from JSON files plus a *dl_updated_at* column indicating the timestamp when records were processed (_processing time_).
-+	*dau* (daily active user): Contains a summary of the number of active users in daily units (based on event time).
-+	*mau* (monthly active user): Contains a summary of the number of active users in monthly units (based on event time).
++	*event_data*: Contains parsed data from JSON files.
++	*dau* (daily active user): Contains a summary of the number of active users in daily units (based on *event time*).
++	*mau* (monthly active user): Contains a summary of the number of active users in monthly units (based on *event time*).
 
 ### Dashboard (Looker Studio - optional)
+
+## Cloning the Repository
+To get started, clone this repository:
+```
+git clone https://github.com/maulanaady/AquaTech-User-Activity-Analysis.git &&
+cd AquaTech-User-Activity-Analysis
+```
 
 ## Data Tech Stacks
 ![Diagram Image](https://github.com/maulanaady/AquaTech-User-Activity-Analysis/blob/main/images/flow_chart.png)

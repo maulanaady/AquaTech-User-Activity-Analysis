@@ -97,9 +97,9 @@ We set up a batch data pipeline (using mixed cloud based and local based) to ing
 + Create a new project via: https://console.cloud.google.com/projectcreate
 +	Create a [service account](https://console.cloud.google.com/iam-admin/serviceaccounts) in your Google Cloud project (IAM & Admin -> Service Accounts -> Create a Service Account) with roles:
 
-  * Cloud Storage -> Storage Admin
-  * BigQuery -> BigQuery Admin
-  * Compute Engine -> Compute Admin
+    - Cloud Storage -> Storage Admin
+    - BigQuery -> BigQuery Admin
+    - Compute Engine -> Compute Admin
   Note: this is meant to be a demo and the permissions granted above are overly broad.
 
 +	Download the service account JSON file (Service Account -> Actions -> Manage Keys -> Create a New Key -> JSON)

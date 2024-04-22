@@ -75,7 +75,12 @@ cd AquaTech-User-Activity-Analysis
 ```
 
 ## Data Tech Stacks
-![Diagram Image](https://github.com/maulanaady/AquaTech-User-Activity-Analysis/blob/main/images/flow_chart.png)
+<details>
+    <summary>Data Pipelines</summary>
+
+![Diagram Image](images/flow_chart.png)
+</details>
+
 We set up a batch data pipeline (using mixed cloud based and local) to ingest, process and visualize the data.
 
 +	[Google Cloud Platform (Cloud Storage and BigQuery)](https://console.cloud.google.com/)

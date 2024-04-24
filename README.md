@@ -168,18 +168,15 @@ We set up a batch data pipeline (using mixed cloud based and local based) to ing
 + DAGs
 
   In this project, we run two DAGs: *get_data* and *event_data_transformations*.
-      <details>
-        <summary>dag</summary>
-
-      ![Diagram Image](images/dag_tab.png)
-      </details>
-  * DAG *get_data*:
+  ![dag image](images/dag_tab.png)
+  
+  - DAG *get_data*:
     This DAG runs every hour (schedule = hourly) and retrieves and processes raw data JSON files according to the execution time parameter in Airflow (not all JSON files are processed at once). The output of one run of the DAG is a CSV file uploaded to Cloud Storage with the naming format: *output_{data_interval_start}_{data_interval_end}.csv (e.g., output_20240413030000_20240413040000.csv is the file generated when the DAG runs for the schedule interval from April 13, 2024, at 03:00:00 to April 13, 2024, at 04:00:00)*. Therefore, in one day, 24 files will be generated. 
     When the *data_interval_start* is at 00:00 early in the morning, this DAG will trigger the *event_data_transformations* DAG for execution. 
 
     Activate the DAG by clicking on the DAGs tab on the web and unpausing the get_data DAG, then the job to extract data from the JSON file will run and store the results in Cloud Storage.
 
-  * DAG *event_data_transformations*:
+  - DAG *event_data_transformations*:
   
     Edit value for *project* key at *profile_args* dict in *ProfileConfig* configration to your preferences project id.
 

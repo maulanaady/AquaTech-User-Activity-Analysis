@@ -57,7 +57,7 @@ Below is an example JSON record from the raw data:
 ```
 The interesting thing here is that records with past *event times*(*timetamp*) may appear in the new JSON files (e.g., a JSON record with *"timestamp": "2022-09-22T11:09:43.929Z"* appears in the file *20221013-030129.json*). This is a kind of *"late arriving data"*. These delayed data will affect the daily active user (*dau*) and monthly active user (*mau*) tables. Therefore, _if there are late-arriving records, the *dau* for the related day (event_time) will be recalculated, as will the *mau* for the related month_.
 
-To handle this case, we will add *dl_updated_at* column for each of our table indicating *data processing time*.
+To handle this case, we will add *dl_updated_at* column for each of our table indicating *data processing time* that we wil use as filter criteria to get new and late arriving data.
 
 ## Desired Output
 #### Tables:

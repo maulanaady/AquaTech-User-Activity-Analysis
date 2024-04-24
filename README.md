@@ -113,7 +113,7 @@ We set up a batch data pipeline (using mixed cloud based and local based) to ing
 ### DBT
 +	Update sources.database in the **./airflow/data/dbt/user_activity/models/staging/schema.yml** file according to your project Id.
     <details>
-      <summary>schema.yml</summary>
+      <summary>schema</summary>
       
     ![dbt image](images/dbt_project_id.png)
     </details>

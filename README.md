@@ -174,7 +174,7 @@ We set up a batch data pipeline (using mixed cloud based and local based) to ing
   In this project, we run three DAGs: *create_bigquery_tables*, *get_data* and *event_data_transformations*.
     <details>
       <summary>DAGs</summary>
-    ![dag image](images/dag_tab.png)
+    ![dag image](images/dags_tab.png)
     </details>  
   
 

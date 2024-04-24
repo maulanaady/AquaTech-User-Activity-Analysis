@@ -4,36 +4,6 @@ In the realm of aquatic-focused startups, understanding user behavior and user g
 
 Beside that, they want to know what kind of activities mostly user accessed in their platform. Data pertaining to user activity is collected and temporarily stored in the internal storage platform, residing on user devices. Subsequently, this data is pulled by a device every minute for all users. The pulled data is stored in JSON format with a timestamp naming convention, such as *20221130-111132.json*, signifying the data pull time as November 30, 2022, at 11:11:32 AM.
 
-## Data Source Preparation
-In this project, JSON files have been stored in the raw_data.zip file (located on Google Drive). To download the file, execute the bash script 
-```
-chmod +x download_raw_data.sh &&
-./download_raw_data.sh
-```
-the output will be saved in the **./raw_data.zip** file.
-
-Simply unzip the raw_data.zip file and save it to the ./airflow/data/ folder:
-```
-unzip ./raw_data.zip -d ./airflow/data/ &&
-rm -f ./raw_data.zip
-```
-The output will be saved in the **./airflow/data/raw_data** folder with folder and file structures corresponding to the datetime format. 
-Execute 
-```
-tree ./airflow/data/raw_data
-``` 
-command to view the folder structure.
-Example folder/file Structure:
-```
-./airflow/data/raw_data
-├── 2022-10-01
-│  ├── 20221001-000000.json
-│  ├── 20221001-000001.json
-│  ├── 20221001-000010.json
-│  ├── 20221001-000017.json
-...
-```
-
 ## Problem Statement
 Below is an example JSON record from the raw data:
 ```
@@ -74,6 +44,36 @@ To get started, clone this repository:
 ```
 git clone https://github.com/maulanaady/AquaTech-User-Activity-Analysis.git &&
 cd AquaTech-User-Activity-Analysis
+```
+
+## Data Source Preparation
+In this project, JSON files have been stored in the raw_data.zip file (located on Google Drive). To download the file, execute the bash script 
+```
+chmod +x download_raw_data.sh &&
+./download_raw_data.sh
+```
+the output will be saved in the **./raw_data.zip** file.
+
+Simply unzip the raw_data.zip file and save it to the ./airflow/data/ folder:
+```
+unzip ./raw_data.zip -d ./airflow/data/ &&
+rm -f ./raw_data.zip
+```
+The output will be saved in the **./airflow/data/raw_data** folder with folder and file structures corresponding to the datetime format. 
+Execute 
+```
+tree ./airflow/data/raw_data
+``` 
+command to view the folder structure.
+Example folder/file Structure:
+```
+./airflow/data/raw_data
+├── 2022-10-01
+│  ├── 20221001-000000.json
+│  ├── 20221001-000001.json
+│  ├── 20221001-000010.json
+│  ├── 20221001-000017.json
+...
 ```
 
 ## Data Tech Stacks

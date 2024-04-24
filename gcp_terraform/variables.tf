@@ -9,7 +9,7 @@ variable "project" {
 
 variable "region" {
   type    = string
-  default = "asia-southeast2"
+  default = "your region"
 }
 
 variable "gcs_bucket_name" {
@@ -19,7 +19,7 @@ variable "gcs_bucket_name" {
 
 variable "location" {
   type    = string
-  default = "asia-southeast2"
+  default = "your location"
 }
 
 variable "bq_dataset_name" {

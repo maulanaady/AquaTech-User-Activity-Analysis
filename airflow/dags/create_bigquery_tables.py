@@ -2,7 +2,7 @@ from airflow import DAG
 from airflow.providers.google.cloud.operators.bigquery import BigQueryExecuteQueryOperator
 from datetime import datetime
 
-dag = DAG('Create Bigquery tables',
+dag = DAG('create_bigquery_tables',
           description='A DAG to execute SQL files from a specific path',
           start_date=datetime(2024, 4, 24),
           template_searchpath=["/opt/airflow/data/"],

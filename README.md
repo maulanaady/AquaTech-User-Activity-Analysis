@@ -112,6 +112,11 @@ We set up a batch data pipeline (using mixed cloud based and local based) to ing
 
 ### DBT
 +	Update sources.database in the **./airflow/data/dbt/user_activity/models/staging/schema.yml** file according to your project Id.
+    <details>
+      <summary>schema.yml</summary>
+      
+    ![dbt image](images/dbt_project_id.png)
+    </details>
 +	We will use the *materialize = incremental* configuration for the *dau* and *mau* tables to handle *"late arriving data"*.
 + Everytime *event_data_transformations* DAG (detail below) run, it will insert records from GSC to Bigquery *event_data* table and value of *dl_updated_at* column is equal to airflow *data_interval_end* runtime parameter (first task of *event_data_transformations* DAG). Then we filter out *event_data* table by this *dl_updated_at* value to get different *event_time* (*distinct date* and *distinct month*, for *dau* and *mau* tables respectively) to upsert *dau* and *mau* tables, all this job is executed using dbt command (second task of *event_data_transformations* DAG).
 

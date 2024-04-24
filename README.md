@@ -108,11 +108,11 @@ We set up a batch data pipeline (using mixed cloud based and local based) to ing
 +	Change directory to the **gcp_terraform** folder.
 +	In the *gcp_terraform/variables.tf* file, update the Terraform variables for project, region, and location according to your preferences.
 +	Execute following command to create the Cloud Storage bucket and BigQuery dataset.
-  ```
-  terraform init
-  terraform plan
-  terraform apply
-  ```
+    ```
+    terraform init
+    terraform plan
+    terraform apply
+    ```
 +	Open google cloud console, and navigate to bigquery. Execute the query for the SQL commands in the *./ddl_table.sql* file.
 
 ### DBT
@@ -138,8 +138,32 @@ We set up a batch data pipeline (using mixed cloud based and local based) to ing
     password: airflow
     ```
   - Hover over the admin tab and click connections.
-  - Create a new connection with **Connection Type = Google Cloud** and **Connection Id = *‘google_client’***. Fill in the **Project Id** according to your project Id, and fill in the **Keyfile Path** referring to service-account.json **(/opt/airflow/data/service-account.json)**.
+    <details>
+      <summary>connection tab</summary>
+
+    ![Diagram Image](images/connection_tab.png)
+    </details>
+
+  - Create a new connection with **Connection Type = Google Cloud** and **Connection Id = *‘google_client’***
+    <details>
+      <summary>create connection</summary>
+
+    ![Diagram Image](images/add_new_connection.png)
+    </details>  
+
+  - Fill in the **Project Id** according to your project Id, and fill in the **Keyfile Path** referring to service-account.json **(/opt/airflow/data/service-account.json)**.
+    <details>
+      <summary>configure connection</summary>
+
+    ![Diagram Image](images/configure_connection.png)
+    </details>  
+
   - Click the test button at the bottom to test the connection to Google Cloud with the predefined configuration. A successful connection test will display *"Connection successfully tested"* at the top of the web page (scroll up), and then save the connection.
+    <details>
+      <summary>test connection</summary>
+
+    ![Diagram Image](images/test_connection.png)
+    </details>  
 
 + DAGs
 

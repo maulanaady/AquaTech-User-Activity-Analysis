@@ -80,7 +80,7 @@ Example folder/file Structure:
 <details>
     <summary>Data Pipelines</summary>
 
-![Diagram Image](images/flow_chart.png)
+![data pipeline Image](images/flow_chart.png)
 </details>
 
 We set up a batch data pipeline (using mixed cloud based and local based) to ingest, process and visualize the data.
@@ -141,42 +141,47 @@ We set up a batch data pipeline (using mixed cloud based and local based) to ing
     <details>
       <summary>connection tab</summary>
 
-    ![Diagram Image](images/connection_tab.png)
+    ![connection Image](images/connection_tab.png)
     </details>
 
   - Create a new connection with **Connection Type = Google Cloud** and **Connection Id = *‘google_client’***
     <details>
       <summary>create connection</summary>
 
-    ![Diagram Image](images/add_new_connection.png)
+    ![add connection Image](images/add_new_connection.png)
     </details>  
 
   - Fill in the **Project Id** according to your project Id, and fill in the **Keyfile Path** referring to service-account.json **(/opt/airflow/data/service-account.json)**.
     <details>
       <summary>configure connection</summary>
 
-    ![Diagram Image](images/configure_connection.png)
+    ![configure connection Image](images/configure_connection.png)
     </details>  
 
   - Click the test button at the bottom to test the connection to Google Cloud with the predefined configuration. A successful connection test will display *"Connection successfully tested"* at the top of the web page (scroll up), and then save the connection.
     <details>
       <summary>test connection</summary>
 
-    ![Diagram Image](images/test_connection.png)
+    ![test connection Image](images/test_connection.png)
     </details>  
 
   - At *airflow/dags/event_data_transformations.py* file, edit value for *project* key at *profile_args* dict in *ProfileConfig* configration to your preferences project id.
     <details>
       <summary>project id</summary>
 
-    ![dag image](images/project_id.png)
+    ![project_id image](images/project_id.png)
     </details>  
 
 
 + DAGs
 
   In this project, we run three DAGs: *create_bigquery_tables*, *get_data* and *event_data_transformations*.
-  ![dag image](images/dag_tab.png)
+    <details>
+      <summary>project id</summary>
+
+    ![dag image](images/dag_tab.png)
+    </details>  
+  
 
   - *create_bigquery_tables* DAG:
     Firstly, activate the DAG by clicking on the DAGs tab on the web and unpausing the *create_bigquery_tables* DAG. This DAG will execute sql file that automatically create tables in Bigquery.

@@ -113,7 +113,6 @@ We set up a batch data pipeline (using mixed cloud based and local based) to ing
     terraform plan
     terraform apply
     ```
-+	Open google cloud console, and navigate to bigquery. Execute the query for the SQL commands in the *./ddl_table.sql* file.
 
 ### DBT
 +	Update sources.database in the **./airflow/data/dbt/user_activity/models/staging/schema.yml** file according to your project Id.
@@ -166,7 +165,7 @@ We set up a batch data pipeline (using mixed cloud based and local based) to ing
     ![Diagram Image](images/test_connection.png)
     </details>  
 
-  - Edit value for *project* key at *profile_args* dict in *ProfileConfig* configration to your preferences project id.
+  - At *airflow/dags/event_data_transformations.py* file, edit value for *project* key at *profile_args* dict in *ProfileConfig* configration to your preferences project id.
     <details>
       <summary>project id</summary>
 
@@ -176,17 +175,17 @@ We set up a batch data pipeline (using mixed cloud based and local based) to ing
 
 + DAGs
 
-  In this project, we run three DAGs: *Create Bigquery tables*, *get_data* and *event_data_transformations*.
+  In this project, we run three DAGs: *create_bigquery_tables*, *get_data* and *event_data_transformations*.
   ![dag image](images/dag_tab.png)
 
-  - *Create Bigquery tables* DAG:
-    Firstly, activate the DAG by clicking on the DAGs tab on the web and unpausing the *Create Bigquery tables* DAG. This DAG will execute sql file that automatically create tables in Bigquery.
+  - *create_bigquery_tables* DAG:
+    Firstly, activate the DAG by clicking on the DAGs tab on the web and unpausing the *create_bigquery_tables* DAG. This DAG will execute sql file that automatically create tables in Bigquery.
 
   - *get_data* DAG:
     This DAG runs every hour (schedule = hourly) and retrieves and processes raw data JSON files according to the execution time parameter in Airflow (not all JSON files are processed at once). The output of one run of the DAG is a CSV file uploaded to Cloud Storage with the naming format: *output_{data_interval_start}_{data_interval_end}.csv (e.g., output_20221013030000_20221013040000.csv is the file generated when the DAG runs for the schedule interval from October 13, 2022, at 03:00:00 to April 13, 2024, at 04:00:00)*. Therefore, in one day, 24 files will be generated. 
     When the *data_interval_start* is at 00:00 early in the morning, this DAG will trigger the *event_data_transformations* DAG for execution. 
 
-    Wait until *Create Bigquery tables* DAG run finished, then unpausing the *get_data* DAG, then the job to extract data from the JSON file will run and store the results in Cloud Storage.
+    Wait until *create_bigquery_tables* DAG run finished, then unpausing the *get_data* DAG, then the job to extract data from the JSON file will run and store the results in Cloud Storage.
 
   - *event_data_transformations* DAG:
     Unpause the *event_data_transformations* DAG. This DAG runs using the data aware scheduling (dataset schedule) triggered by the *get_data* DAG. When running, this DAG will execute a BigQuery query to create an external table from the CSV file in Cloud Storage for a one-day range and then insert it into the *event_data* table. Next, Airflow will execute the DBT command to transform *event_data* table to upsert the *dau* and *mau* tables.

@@ -168,12 +168,12 @@ We set up a batch data pipeline (using mixed cloud based and local based) to ing
 
   - Edit value for *project* key at *profile_args* dict in *ProfileConfig* configration to your preferences project id.
     <details>
-      <summary>test connection</summary>
+      <summary>project id</summary>
 
     ![dag image](images/project_id.png)
     </details>  
 
-    
+
 + DAGs
 
   In this project, we run two DAGs: *get_data* and *event_data_transformations*.

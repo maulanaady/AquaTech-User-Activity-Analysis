@@ -166,6 +166,9 @@ We set up a batch data pipeline (using mixed cloud based and local based) to ing
     ![Diagram Image](images/test_connection.png)
     </details>  
 
+  - Edit value for *project* key at *profile_args* dict in *ProfileConfig* configration to your preferences project id.
+    ![dag image](images/project_id.png)
+
 + DAGs
 
   In this project, we run two DAGs: *get_data* and *event_data_transformations*.
@@ -178,10 +181,6 @@ We set up a batch data pipeline (using mixed cloud based and local based) to ing
     Activate the DAG by clicking on the DAGs tab on the web and unpausing the *get_data* DAG, then the job to extract data from the JSON file will run and store the results in Cloud Storage.
 
   - DAG *event_data_transformations*:
-  
-    Edit value for *project* key at *profile_args* dict in *ProfileConfig* configration to your preferences project id.
-    ![dag image](images/project_id.png)
-
     Unpause the *event_data_transformations* DAG. This DAG runs using the data aware scheduling (dataset schedule) triggered by the *get_data* DAG. When running, this DAG will execute a BigQuery query to create an external table from the CSV file in Cloud Storage for a one-day range and then insert it into the *event_data* table. Next, Airflow will execute the DBT command to transform *event_data* table to upsert the *dau* and *mau* tables.
 
 ### Looker Studio (optional)

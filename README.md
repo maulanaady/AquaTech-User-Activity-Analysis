@@ -77,11 +77,7 @@ Example folder/file Structure:
 ```
 
 ## Data Tech Stacks
-<details>
-    <summary>Data Pipelines</summary>
-
 ![data pipeline Image](images/flow_chart.png)
-</details>
 
 We set up a batch data pipeline (using mixed cloud based and local based) to ingest, process and visualize the data.
 
@@ -167,7 +163,7 @@ We set up a batch data pipeline (using mixed cloud based and local based) to ing
 
   - At *airflow/dags/event_data_transformations.py* file, edit value for *project* key at *profile_args* dict in *ProfileConfig* configration to your preferences project id.
     <details>
-      <summary>project id</summary>
+      <summary>Update project id</summary>
 
     ![project_id image](images/project_id.png)
     </details>  
@@ -177,8 +173,7 @@ We set up a batch data pipeline (using mixed cloud based and local based) to ing
 
   In this project, we run three DAGs: *create_bigquery_tables*, *get_data* and *event_data_transformations*.
     <details>
-      <summary>project id</summary>
-
+      <summary>DAGs</summary>
     ![dag image](images/dag_tab.png)
     </details>  
   

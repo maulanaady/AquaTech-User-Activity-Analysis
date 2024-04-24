@@ -4,7 +4,7 @@ variable "credentials" {
 
 variable "project" {
   type    = string
-  default = "zoomcamp-ady"
+  default = "your Project Id"
 }
 
 variable "region" {

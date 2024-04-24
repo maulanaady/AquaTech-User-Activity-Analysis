@@ -26,7 +26,7 @@ profile_config = ProfileConfig(
     target_name="dev",
     profile_mapping=GoogleCloudServiceAccountFileProfileMapping(
     conn_id = 'google_client',
-    profile_args = {"project" : "zoomcamp-ady", 
+    profile_args = {"project" : "your Project_Id", 
                     "dataset" : "event_zoomcamp_dataset",
                     "keyfile" : "/opt/airflow/data/service-account.json"},
     ),

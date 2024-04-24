@@ -2,7 +2,7 @@ version: 2
 
 sources:
   - name: staging
-    database: zoomcamp-ady
+    database: your Project_Id
     schema: event_zoomcamp_dataset
     tables:
       - name: event_data

@@ -1,14 +1,11 @@
-import json,sys
-import csv,logging
-import time
+import json
+import csv
 import glob
 import datetime
 import os
 from pathlib import Path
-import pendulum
 from airflow import DAG
 from airflow.decorators import task
-
 from airflow.datasets import Dataset
 from airflow.operators.empty import EmptyOperator
 from airflow.models.baseoperator import chain
@@ -30,7 +27,7 @@ def _validateJSON(jsonData):
 with DAG(
     dag_id="ingest_data",
     start_date=datetime.datetime(2022, 10, 1),
-    start_date=datetime.datetime(2022, 11, 30),
+    end_date=datetime.datetime(2022, 11, 30),
     schedule='0 */1 * * *',
     max_active_runs=1,
     catchup=True) as dag:

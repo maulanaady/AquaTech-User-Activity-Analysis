@@ -54,7 +54,7 @@ def event_data_transformations():
             create or replace external table event_data_dataset.ext_event_data
             OPTIONS (
             format = 'CSV',
-            uris = ['gs://event_data_bucket/output_{dt}*.csv']
+            uris = ['gs://user_activities_bucket/output_{dt}*.csv']
             )
         """
         insert_query = f"""

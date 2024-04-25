@@ -14,7 +14,7 @@ variable "region" {
 
 variable "gcs_bucket_name" {
   type    = string
-  default = "event_data_bucket"
+  default = "user_activities_bucket"
 }
 
 variable "location" {

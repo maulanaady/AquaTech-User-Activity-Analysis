@@ -113,7 +113,7 @@ We set up a batch data pipeline (using mixed cloud based and local based) to ing
     terraform plan
     terraform apply
     ```
-+ *terraform apply* command maybe show error like below:
++ First execution of *terraform apply* command maybe show error like below:
 
     <details>
       <summary>error</summary>

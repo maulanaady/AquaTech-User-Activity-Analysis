@@ -105,7 +105,7 @@ We set up a batch data pipeline (using mixed cloud based and local based) to ing
     <details>
       <summary>variables</summary>
       
-    ![terraform image](images/terraform_variables.png)
+    ![terraform image](images/terraform_variable.png)
     </details>
 +	Execute following command to create the Cloud Storage bucket and BigQuery dataset.
     ```

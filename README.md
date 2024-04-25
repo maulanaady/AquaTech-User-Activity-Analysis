@@ -114,18 +114,21 @@ We set up a batch data pipeline (using mixed cloud based and local based) to ing
     terraform apply
     ```
   *terraform apply* command maybe show error like below:
+
     <details>
       <summary>error</summary>
       
     ![terraform error image](images/bigquery_api_disable_notif.png)
     </details>    
+
   Just copy url shown in your browser, and enable bigquery API.
+  
     <details>
       <summary>bigquery api</summary>
       
     ![bigquery API image](images/bigquery_api_enable.png)
     </details>
-    
+
   Execute *terraform apply* command again.  
 
 ### DBT

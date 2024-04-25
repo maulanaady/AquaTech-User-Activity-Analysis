@@ -95,7 +95,6 @@ We set up a batch data pipeline (using mixed cloud based and local based) to ing
 
     - Cloud Storage -> Storage Admin
     - BigQuery -> BigQuery Admin
-    - Compute Engine -> Compute Admin
 
 +	Download the service account JSON file (Service Account -> Actions -> Manage Keys -> Create a New Key -> JSON). Save this json file as *service-account.json* in the **gcp_terraform** folder.
 
@@ -114,6 +113,20 @@ We set up a batch data pipeline (using mixed cloud based and local based) to ing
     terraform plan
     terraform apply
     ```
+  *terraform apply* command maybe show error like below:
+    <details>
+      <summary>error</summary>
+      
+    ![terraform error image](images/bigquery_api_disable_notif.png)
+    </details>    
+  Just copy url shown in your browser, and enable bigquery API.
+    <details>
+      <summary>bigquery api</summary>
+      
+    ![bigquery API image](images/bigquery_api_enable.png)
+    </details>
+    
+  Execute *terraform apply* command again.  
 
 ### DBT
 +	Update sources.database in the **./airflow/data/dbt/user_activity/models/staging/schema.yml** file according to your project Id.

@@ -101,7 +101,7 @@ We set up a batch data pipeline (using mixed cloud based and local based) to ing
 ### Terraform (for activating Cloud Storage and BigQuery services)
 +	Install Terraform on your machine/VM.
 +	Change directory to the **gcp_terraform** folder.
-+	In the *gcp_terraform/variables.tf* file, update the Terraform variables for project, region, and location according to your preferences.
++	In the *variables.tf* file, update the Terraform variables for project, region, and location according to your preferences.
     <details>
       <summary>variables</summary>
       

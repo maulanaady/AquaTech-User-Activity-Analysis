@@ -9,20 +9,20 @@ variable "project" {
 
 variable "region" {
   type    = string
-  default = "your region"
+  default = "US"
 }
 
 variable "gcs_bucket_name" {
   type    = string
-  default = "event_zoomcamp_bucket"
+  default = "event_data_bucket"
 }
 
 variable "location" {
   type    = string
-  default = "your location"
+  default = "US"
 }
 
 variable "bq_dataset_name" {
   type    = string
-  default = "event_zoomcamp_dataset"
+  default = "event_data_dataset"
 }

@@ -27,7 +27,7 @@ profile_config = ProfileConfig(
     profile_mapping=GoogleCloudServiceAccountFileProfileMapping(
     conn_id = 'google_client',
     profile_args = {"project" : "your Project_Id", 
-                    "dataset" : "event_zoomcamp_dataset",
+                    "dataset" : "event_data_dataset",
                     "keyfile" : "/opt/airflow/data/service-account.json"},
     ),
 )
@@ -51,20 +51,20 @@ def event_data_transformations():
         dt = data_interval_start.strftime('%Y%m%d')
         data_interval_end = data_interval_end.strftime('%Y-%m-%d %H:%M:%S')
         ext_query = f"""
-            create or replace external table event_zoomcamp_dataset.ext_event_data
+            create or replace external table event_data_dataset.ext_event_data
             OPTIONS (
             format = 'CSV',
-            uris = ['gs://event_zoomcamp_bucket/output_{dt}*.csv']
+            uris = ['gs://event_data_bucket/output_{dt}*.csv']
             )
         """
         insert_query = f"""
             MERGE INTO
-            event_zoomcamp_dataset.event_data AS T
+            event_data_dataset.event_data AS T
             USING
             (
                 with tmp as (SELECT *, TIMESTAMP('{data_interval_end}') as dl_updated_at,
                 ROW_NUMBER() OVER (PARTITION BY distinct_id, event_time ORDER BY event_time ASC) as rn
-                FROM event_zoomcamp_dataset.ext_event_data)
+                FROM event_data_dataset.ext_event_data)
                 select * EXCEPT (rn)
                 from tmp 
                 where rn = 1  

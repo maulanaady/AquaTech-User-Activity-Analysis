@@ -1,4 +1,4 @@
-CREATE TABLE event_zoomcamp_dataset.event_data (
+CREATE TABLE event_data_dataset.event_data (
     distinct_id INTEGER NOT NULL,
     elements STRING,
     event STRING,
@@ -22,21 +22,21 @@ CLUSTER BY dl_updated_at;
 
 
 
-CREATE TABLE event_zoomcamp_dataset.dau (
+CREATE TABLE event_data_dataset.dau (
     event_date DATE NOT NULL,
     cnt INTEGER,
     dl_updated_at TIMESTAMP NOT NULL
 )
 PARTITION BY DATE_TRUNC(event_date,MONTH);
 
-insert into event_zoomcamp_dataset.dau 
+insert into event_data_dataset.dau 
 values(date(timestamp '2022-01-01 00:00:00'),0,timestamp '2022-01-01 00:00:00');
 
-CREATE TABLE event_zoomcamp_dataset.mau (
+CREATE TABLE event_data_dataset.mau (
     event_month DATE NOT NULL,
     cnt INTEGER,
     dl_updated_at TIMESTAMP NOT NULL
 );
 
-insert into event_zoomcamp_dataset.mau 
+insert into event_data_dataset.mau 
 values(date(timestamp '2022-01-01 00:00:00'),0,timestamp '2022-01-01 00:00:00');

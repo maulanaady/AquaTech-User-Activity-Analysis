@@ -12,7 +12,7 @@ from airflow.models.baseoperator import chain
 
 # local_file_path = "/opt/airflow/data/output.csv"
 # gcs_file_path = "output.csv"
-bucket_name = "event_zoomcamp_bucket"
+bucket_name = "event_data_bucket"
 
 transform_dataset = Dataset("bigquery/event_data")
 
@@ -98,7 +98,7 @@ with DAG(
         if xcom:
             hook = GCSHook(gcp_conn_id=gcp_conn_id)
             hook.upload(
-                    bucket_name="event_zoomcamp_bucket",
+                    bucket_name="event_data_bucket",
                     object_name=context["task_instance"].xcom_pull(task_ids='get_data', key='return_value'),
                     filename="/opt/airflow/data/{}".format(context["task_instance"].xcom_pull(task_ids='get_data', key='return_value')),
                 )

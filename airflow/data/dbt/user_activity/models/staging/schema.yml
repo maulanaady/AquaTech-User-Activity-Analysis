@@ -3,7 +3,7 @@ version: 2
 sources:
   - name: staging
     database: your Project_Id
-    schema: event_zoomcamp_dataset
+    schema: event_data_dataset
     tables:
       - name: event_data
         identifier: event_data

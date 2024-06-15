@@ -3,6 +3,7 @@
 These SQL models are used within dbt (data build tool) to handle the processing of daily active user (*DAU*) and monthly active user (*MAU*) metrics, incorporating late arriving data. Each model has a specific role in the ETL pipeline. Let's break down each SQL model and understand its purpose and logic.
 
 1. *dau_event_data.sql*
+
 This model calculates the daily active users from the raw event data, ensuring that both new and late arriving data are included.
 ```
 {{
@@ -40,6 +41,7 @@ Explanation:
 + Final Query: Joins eventdate with the raw event data to count distinct user IDs (distinct_id) per event date, including the runtime for late arriving data tracking.
 
 2. *mau_event_data.sql*
+
 This model calculates the monthly active users from the raw event data, ensuring inclusion of late arriving data.
 ```
 {{
@@ -81,6 +83,7 @@ Explanation:
 + Final Query: Joins loaded_data with the raw event data to count distinct user IDs per month, including the runtime for tracking late arriving data.
 
 3. *dau.sql*
+
 This model materializes the daily active users' data incrementally, meaning it only processes new or updated data since the last run.
 ```
 {{
@@ -105,6 +108,7 @@ Explanation:
 + Incremental Logic: If running incrementally, only select records where dl_updated_at is greater than or equal to the maximum dl_updated_at in the existing table.
 
 4. *mau.sql*
+
 This model materializes the monthly active users' data incrementally, similar to `dau.sql`.
 ```
 {{
@@ -129,34 +133,4 @@ Explanation:
 + Incremental Logic: If running incrementally, only select records where dl_updated_at is greater than or equal to the maximum dl_updated_at in the existing table.
 
 
-The incremental models (dau.sql and mau.sql) efficiently update the data, reducing processing time and resources. This approach not only enhances data accuracy but also optimizes the ETL process
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-Try running the following commands:
-- dbt run
-- dbt test
-
-
-### Resources:
-- Learn more about dbt [in the docs](https://docs.getdbt.com/docs/introduction)
-- Check out [Discourse](https://discourse.getdbt.com/) for commonly asked questions and answers
-- Join the [chat](https://community.getdbt.com/) on Slack for live discussions and support
-- Find [dbt events](https://events.getdbt.com) near you
-- Check out [the blog](https://blog.getdbt.com/) for the latest news on dbt's development and best practices
+The incremental models (dau.sql and mau.sql) efficiently update the data, reducing processing time and resources. This approach not only enhances data accuracy but also optimizes the ETL process.
